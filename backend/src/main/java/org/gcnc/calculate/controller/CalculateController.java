@@ -22,4 +22,10 @@ public class CalculateController {
         logger.info("Called method /calculate");
         return calculateService.calculateResponse(req);
     }
+
+    @RequestMapping(value = "/calculate", method = RequestMethod.GET)
+    public Response calculateGet(@RequestParam("league_name") String leagueName) {
+        logger.info("Called method /calculate");
+        return calculateService.calculateResponse(Request.buildFor(leagueName));
+    }
 }
