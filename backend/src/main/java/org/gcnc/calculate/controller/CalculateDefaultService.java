@@ -103,8 +103,9 @@ public class CalculateDefaultService implements CalculateService {
             webDriver.close();
             webDriver.quit();
             return content;
-        } catch (MalformedURLException e) {
+        } catch (Exception e) {
             logger.error("Cannot initialize webdriver: {} ", e.getMessage());
+            e.printStackTrace();
             throw new RemoteSiteException();
         }
     }
@@ -128,7 +129,7 @@ public class CalculateDefaultService implements CalculateService {
             Document doc = Jsoup.parse(content);
             return doc.select(".top-ten").get(0).children().get(1).children().stream()
                     .collect(Collectors.toMap(
-                            e-> e.children().get(2).children().get(0).children().get(0).html(),
+                            e -> e.children().get(2).children().get(0).children().get(0).html(),
                             e -> Integer.parseInt(e.children().get(10).children().get(0).html()))
                     );
         } catch (Exception e) {

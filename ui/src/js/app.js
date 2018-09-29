@@ -46,8 +46,10 @@ app.controller('HomeController', ['$scope', '$http', 'ENV', function($scope, $ht
 	    //
 	console.log(data)
         $http({
-            method: 'POST',
-            url: ENV.URL + ":" + ENV.PORT + "/calculate",
+//            method: 'POST',
+		method: 'GET',
+//            url: ENV.URL + ":" + ENV.PORT + "/calculate",
+	    url: "/calculate?league_name=" + $scope.league_name,
             data: JSON.stringify(data),
             headers: {'Content-Type': 'application/json'}
         }).then(function(response) {
