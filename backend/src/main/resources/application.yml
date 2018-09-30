@@ -8,4 +8,4 @@ logging:
 properties:
   baseUrl: "http://leghe.fantagazzetta.com/"
   calendarSuffix: "/calendario"
-  seleniumUrl: "http://selenium1:4444/wd/hub"
+  seleniumUrl: "http://selenium:4444/wd/hub"

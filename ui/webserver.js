@@ -17,7 +17,7 @@ app.get('/', function(req, res) {
 
 app.get('/calculate', function(req, res, body) {
   console.log(req.query.league_name)
-  var newurl = 'http://localhost:8100/calculate?league_name=' + req.query.league_name;
+  var newurl = 'http://fantaleghe-backend:8100/calculate?league_name=' + req.query.league_name;
   request(newurl).pipe(res);
 });
 
