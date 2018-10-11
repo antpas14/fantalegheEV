@@ -13,16 +13,11 @@ import org.springframework.web.bind.annotation.*;
 public class CalculateController {
 
     @Autowired
-    CalculateService calculateService;
+    private CalculateService calculateService;
 
     public CalculateController() {
     }
     private final Logger logger = LoggerFactory.getLogger(CalculateController.class);
-    @RequestMapping(value = "/calculate", method = RequestMethod.POST)
-    public Response calculate(@RequestBody Request req) {
-        logger.info("Called method /calculate");
-        return calculateService.calculateResponse(req);
-    }
 
     @RequestMapping(value = "/calculate", method = RequestMethod.GET)
     public Response calculateGet(@RequestParam("league_name") String leagueName) {
