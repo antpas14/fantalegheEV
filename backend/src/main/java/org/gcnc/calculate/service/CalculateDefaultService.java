@@ -1,4 +1,4 @@
-package org.gcnc.calculate.controller;
+package org.gcnc.calculate.service;
 
 import org.gcnc.calculate.exceptions.RemoteSiteException;
 import org.gcnc.calculate.model.*;
@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
