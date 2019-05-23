@@ -2,20 +2,19 @@ package org.gcnc.calculate.service;
 
 import org.gcnc.calculate.exceptions.RemoteSiteException;
 import org.gcnc.calculate.model.*;
-import org.gcnc.calculate.model.Properties;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
@@ -23,6 +22,9 @@ import java.util.stream.Collectors;
 public class CalculateDefaultService implements CalculateService {
     @Autowired
     Properties properties;
+
+    @Autowired
+    RemoteWebDriver webDriver;
 
     private final Logger logger = LoggerFactory.getLogger(CalculateDefaultService.class);
 
@@ -92,21 +94,8 @@ public class CalculateDefaultService implements CalculateService {
     }
 
     private String getWebPage(String url) throws RemoteSiteException {
-        try {
-            ChromeOptions options = new ChromeOptions();
-            options.addArguments(Arrays.asList("headless", "no-sandbox", "window-size=1200x800"));
-            WebDriver webDriver = new RemoteWebDriver(new URL(properties.getSeleniumUrl()),  options);
-            logger.info("Successfully created webdriver");
-            webDriver.get(url);
-            String content = webDriver.getPageSource();
-            webDriver.close();
-            webDriver.quit();
-            return content;
-        } catch (Exception e) {
-            logger.error("Cannot initialize webdriver: {} ", e.getMessage());
-            e.printStackTrace();
-            throw new RemoteSiteException();
-        }
+        webDriver.get(url);
+        return webDriver.getPageSource();
     }
 
     private Map<Integer, List<TeamResult>> createMap(Elements calendarDays) {
