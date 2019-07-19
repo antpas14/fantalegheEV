@@ -6,6 +6,6 @@ logging:
   level:
     org.springframework.web: DEBUG
 properties:
-  baseUrl: "http://leghe.fantagazzetta.com/"
+  baseUrl: "http://leghe.fantacalcio.com/"
   calendarSuffix: "/calendario"
   seleniumUrl: "http://selenium:4444/wd/hub"
