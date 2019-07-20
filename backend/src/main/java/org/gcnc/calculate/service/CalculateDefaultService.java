@@ -4,6 +4,7 @@ import org.gcnc.calculate.exceptions.RemoteSiteException;
 import org.gcnc.calculate.model.*;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.slf4j.Logger;
@@ -20,17 +21,21 @@ import java.util.stream.Collectors;
 
 @Component
 public class CalculateDefaultService implements CalculateService {
-    @Autowired
-    Properties properties;
+
+    private Properties properties;
+    private RemoteWebDriver webDriver;
 
     @Autowired
-    RemoteWebDriver webDriver;
+    CalculateDefaultService(Properties properties, RemoteWebDriver remoteWebDriver) {
+        this.webDriver = remoteWebDriver;
+        this.properties = properties;
+    }
 
     private final Logger logger = LoggerFactory.getLogger(CalculateDefaultService.class);
 
     @Override
     public Response calculateResponse(Request req) {
-        logger.info("New request for league " + req.getLeagueName());
+        logger.info("New request for league {}", req.getLeagueName());
         Map<String, Integer> points;
         Map<String, Double> evPoints;
         try {
@@ -84,7 +89,6 @@ public class CalculateDefaultService implements CalculateService {
         }
     }
 
-
     private Map<Integer, List<TeamResult>> getResults(String leagueName) throws RemoteSiteException {
         String url = properties.getBaseUrl() + leagueName + properties.getCalendarSuffix();
         String content = getWebPage(url);
@@ -103,8 +107,8 @@ public class CalculateDefaultService implements CalculateService {
         return calendarDays.stream()
             .map(c-> c.select(".match"))
             .map(m -> m.select(".team").stream()
-                    .filter(t -> t.select(".team-score").size() > 0 && !t.select(".team-score").get(0).text().equals(""))
-                    .map(t -> new TeamResult(t.select(".team-name").get(0).text(), Integer.parseInt(t.select(".team-score").get(0).text())))
+                    .filter(this::isValidTeamName)
+                    .map(t -> new TeamResult(getTeamNameFromMatch(t), getTeamPointsFromMatch(t)))
                     .collect(Collectors.toList()))
             .filter(l -> !l.isEmpty())
             .collect(Collectors.toMap(m-> counter.incrementAndGet(), m -> m));
@@ -115,14 +119,35 @@ public class CalculateDefaultService implements CalculateService {
             String url = properties.getBaseUrl() + leagueName;
             String content = getWebPage(url);
             Document doc = Jsoup.parse(content);
-            return doc.select(".top-ten").get(0).children().get(1).children().stream()
-                    .collect(Collectors.toMap(
-                            e -> e.children().get(2).children().get(0).children().get(0).html(),
-                            e -> Integer.parseInt(e.children().get(10).children().get(0).html()))
+            return getRankingTable(doc).stream()
+                    .collect(Collectors.toMap(this::getTeamNameFromRankingTable, this::getTeamPointsFromRankingTable)
                     );
         } catch (Exception e) {
             throw new RemoteSiteException();
         }
     }
 
+    private boolean isValidTeamName(Element t) {
+        return t.select(".team-score").size() > 0 && !t.select(".team-score").get(0).text().equals("");
+    }
+
+    private String getTeamNameFromMatch(Element t) {
+        return t.select(".team-name").get(0).text();
+    }
+
+    private Integer getTeamPointsFromMatch(Element t) {
+        return Integer.parseInt(t.select(".team-score").get(0).text());
+    }
+
+    private String getTeamNameFromRankingTable(Element e) {
+        return e.children().get(2).children().get(0).children().get(0).html();
+    }
+
+    private Integer getTeamPointsFromRankingTable(Element e) {
+        return Integer.parseInt(e.children().get(10).children().get(0).html());
+    }
+
+    private Elements getRankingTable(Document doc) {
+        return doc.select(".top-ten").get(0).children().get(1).children();
+    }
 }
