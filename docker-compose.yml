@@ -14,7 +14,7 @@ services:
                 ports: 
                         - "3001:3001"
                 links: 
-                        - "fantaleghe-backend:fantaleghe-backend"
+                       - "fantaleghe-backend:fantaleghe-backend"
                 depends_on: 
                         - fantaleghe-backend                       
         selenium:
@@ -22,8 +22,8 @@ services:
                 ports: 
                         - "4444:4444"
                 environment:
-                    - GRID_TIMEOUT=120
-                    - GRID_MAX_SESSION=200
-                    - GRID_NEW_SESSION_WAIT_TIMEOUT=-1
-                    - GRID_BROWSER_TIMEOUT=120
+                        - GRID_TIMEOUT=120
+                        - GRID_MAX_SESSION=200
+                        - GRID_NEW_SESSION_WAIT_TIMEOUT=-1
+                        - GRID_BROWSER_TIMEOUT=120
             

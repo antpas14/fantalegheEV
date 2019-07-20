@@ -1,11 +1,11 @@
 server:
-  port: 8101
+  port: 8100
   servlet:
     context-path: /
 logging:
   level:
     org.springframework.web: DEBUG
 properties:
-  baseUrl: "http://leghe.fantacalcio.it/"
+  baseUrl: "http://leghe.fantacalcio.com/"
   calendarSuffix: "/calendario"
-  seleniumUrl: "http://selenium:4444/wd/hub"
+  seleniumUrl: "http://127.0.0.1:4444/wd/hub"

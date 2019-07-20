@@ -1,5 +1,6 @@
 var express = require('express');
 var app = express();
+var request = require('request');
 
 // Define static routes
 app.use('/assets', express.static('src/assets'));
@@ -12,6 +13,12 @@ app.use(express.static(__dirname + '/html'));
 
 app.get('/', function(req, res) {
     res.sendFile(__dirname + '/src/html/index.html');
+});
+
+app.get('/calculate', function(req, res, body) {
+  console.log(req.query.league_name)
+  var newurl = 'http://fantaleghe-backend:8100/calculate?league_name=' + req.query.league_name;
+  request(newurl).pipe(res);
 });
 
 var server = require('http').createServer(app); 

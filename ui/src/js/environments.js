@@ -1,6 +1,6 @@
 'use strict';
 
 angular.module('env', []).constant('ENV', {
-	URL: 'http://localhost',
+	URL: 'http://fantaleghe-backend',
 	 	PORT: '8100',
 	});
