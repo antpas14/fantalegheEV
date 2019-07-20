@@ -1,6 +1,6 @@
 
-[![Build Status](https://travis-ci.org/antpas14/fantalegheEV.svg?branch=master)](https://travis-ci.org/antpas14/fantalegheEV)
-[![Coverage Status](https://coveralls.io/repos/github/antpas14/fantalegheEV/badge.svg?branch=master)](https://coveralls.io/github/antpas14/fantalegheEV?branch=master)
+[![Build Status](https://travis-ci.org/antpas14/fantalegheEV.svg?branch=develop)](https://travis-ci.org/antpas14/fantalegheEV)
+[![Coverage Status](https://codecov.io/gh/antpas14/fantalegheEV/branch/develop/graph/badge.svg)](https://codecov.io/gh/antpas14/fantalegheEV/branch/develop/graph/badge.svg)
 
 # Fantaleghe EV
 

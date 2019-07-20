@@ -7,11 +7,13 @@ import java.io.Serializable;
 @Getter
 public class Request implements Serializable {
     private String leagueName;
-    private int goalThreshold;
-    private int firstGoalThreshold;
 
-    @Override
-    public String toString() {
-        return "{\"leagueName\":\"" + leagueName + "\", \"firstGoalThreshold\":\"" + firstGoalThreshold + "\", \"goalThreshold\":\"" + goalThreshold + "\"}";
+    public Request(String leagueName) {
+        this.leagueName = leagueName;
     }
+
+    public static Request buildFor(String leagueName) {
+        return new Request(leagueName);
+    }
+
 }
