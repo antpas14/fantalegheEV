@@ -27,6 +27,8 @@ public class RemoteWebDriverConfig {
             ChromeOptions options = new ChromeOptions();
             options.addArguments(Arrays.asList("headless", "no-sandbox", "window-size=1200x800"));
             logger.info("Initializing remote web driver at url {}", properties.getSeleniumUrl());
+            logger.trace("Base URL is {} ", properties.getBaseUrl());
+            logger.trace("Calendar URL is {} ", properties.getBaseUrl() + properties.getCalendarSuffix());
             return new RemoteWebDriver(new URL(properties.getSeleniumUrl()), options);
         } catch (Exception e) {
             e.printStackTrace();
