@@ -38,6 +38,7 @@ public class CalculateDefaultServiceTest {
     @Before
     public void init() {
         MockitoAnnotations.initMocks(this);
+        initializeProperties();
         calculateService = new CalculateDefaultService(properties, webDriver);
     }
 
@@ -59,5 +60,33 @@ public class CalculateDefaultServiceTest {
         Response response = calculateService.calculateResponse(request);
         // Then
         Assert.assertEquals("ok", response.getStatus());
+        Assert.assertEquals("Sasha FC", response.getRank().get(0).getTeam());
+        Assert.assertEquals(new Double(51.00000000000001), response.getRank().get(0).getEvPoints());
+    }
+
+    @Test
+    public void calculateTestFailure() throws IOException {
+        // Given
+        File rankingFile = new File("src/test/resources/html/ranking.html");
+        File calendarFile = new File("src/test/resources/html/calendar.html");
+
+
+        String ranking = new String(Files.readAllBytes(Paths.get(rankingFile.getAbsolutePath())));
+        String calendar = new String(Files.readAllBytes(Paths.get(calendarFile.getAbsolutePath())));
+        Mockito.when(webDriver.getPageSource()).thenThrow(NullPointerException.class);
+
+        Request request = new Request("league-name");
+        // When
+        Response response = calculateService.calculateResponse(request);
+        // Then
+        Assert.assertEquals("err", response.getStatus());
+    }
+
+
+
+    private void initializeProperties() {
+        properties.setBaseUrl("http://baseurl");
+        properties.setCalendarSuffix("/calendar");
+        properties.setSeleniumUrl("http://selenium");
     }
 }
