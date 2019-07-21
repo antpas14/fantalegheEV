@@ -40,7 +40,7 @@
                 <version>0.8.2</version>
                 <configuration>
                     <excludes>
-                        <exclude>org.gcnc.calculate.model.Properties</exclude>
+                        <exclude>org/gcnc/calculate/model/Properties.class</exclude>
                     </excludes>
                 </configuration>
                 <executions>
