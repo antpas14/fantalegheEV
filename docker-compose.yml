@@ -9,6 +9,7 @@ services:
                         - "selenium:selenium"
                 depends_on:
                         - selenium
+                        - postgres
         ui:
                 image: fantaleghe-ui
                 ports: 
@@ -26,4 +27,12 @@ services:
                         - GRID_MAX_SESSION=200
                         - GRID_NEW_SESSION_WAIT_TIMEOUT=-1
                         - GRID_BROWSER_TIMEOUT=120
-            
+        postgres:
+                image: postgres:9.6-alpine
+                ports:
+                        - "5432:5432"
+                volumes:
+                        - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql
+                        - ./postgres-data:/var/lib/postgresql/data
+volumes:
+        postgres-data:

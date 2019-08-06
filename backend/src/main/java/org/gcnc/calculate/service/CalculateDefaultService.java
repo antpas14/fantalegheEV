@@ -1,7 +1,12 @@
 package org.gcnc.calculate.service;
 
+import org.gcnc.calculate.entity.LeagueEntity;
+import org.gcnc.calculate.entity.RankEntity;
 import org.gcnc.calculate.exceptions.RemoteSiteException;
 import org.gcnc.calculate.model.*;
+import org.gcnc.calculate.repository.LeagueRepository;
+import org.gcnc.calculate.repository.RankRepository;
+import org.gcnc.calculate.utils.RankUtil;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -12,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,11 +30,19 @@ public class CalculateDefaultService implements CalculateService {
 
     private Properties properties;
     private RemoteWebDriver webDriver;
+    private LeagueRepository leagueRepository;
+    private RankRepository rankRepository;
 
     @Autowired
-    CalculateDefaultService(Properties properties, RemoteWebDriver remoteWebDriver) {
+    CalculateDefaultService(Properties properties,
+                            RemoteWebDriver remoteWebDriver,
+                            LeagueRepository leagueRepository,
+                            RankRepository rankRepository)
+                             {
         this.webDriver = remoteWebDriver;
         this.properties = properties;
+        this.leagueRepository = leagueRepository;
+        this.rankRepository = rankRepository;
     }
 
     private final Logger logger = LoggerFactory.getLogger(CalculateDefaultService.class);
@@ -36,23 +50,44 @@ public class CalculateDefaultService implements CalculateService {
     @Override
     public Response calculateResponse(Request req) {
         logger.info("New request for league {}", req.getLeagueName());
-        Map<String, Integer> points;
-        Map<String, Double> evPoints;
-        try {
-            points = getPoints(req.getLeagueName());
-            evPoints = calculateEVRank(getResults(req.getLeagueName()));
-        } catch (RemoteSiteException e) {
-            logger.error("Exception while retrieving data from remote URL");
-            return Response.buildFor("err", "Exception while retrieving data", new ArrayList<>());
-        }
-        if (evPoints.size() > 0) {
-            List<Rank> rank = evPoints.keySet().stream()
-                    .map(t -> new Rank(t, evPoints.get(t), points.get(t)))
-                    .sorted((r1, r2) -> r2.getPoints() - r1.getPoints())
+        LeagueEntity leagueEntity = leagueRepository.findByLeagueName(req.getLeagueName());
+        if (leagueEntity == null) {
+            leagueEntity = LeagueEntity.builder()
+                    .leagueName(req.getLeagueName())
+                    .lastUpdated(LocalDate.now())
+                    .build();
+            Map<String, Integer> points;
+            Map<String, Double> evPoints;
+            try {
+                points = getPoints(req.getLeagueName());
+                evPoints = calculateEVRank(getResults(req.getLeagueName()));
+            } catch (RemoteSiteException e) {
+                logger.error("Exception while retrieving data from remote URL");
+                return Response.buildFor("err", "Exception while retrieving data", new ArrayList<>());
+            }
+
+            if (evPoints.size() > 0) {
+                List<Rank> rank = evPoints.keySet().stream()
+                        .map(t -> new Rank(t, evPoints.get(t), points.get(t)))
+                        .sorted((r1, r2) -> r2.getPoints() - r1.getPoints())
+                        .collect(Collectors.toList());
+                LeagueEntity finalLeagueEntity = leagueEntity;
+                List<RankEntity> rankEntities = rank.stream()
+                        .map(x-> RankUtil.buildFor(x, finalLeagueEntity))
+                        .collect(Collectors.toList());
+                leagueRepository.save(leagueEntity);
+                rankRepository.saveAll(rankEntities);
+
+                return Response.buildFor("ok", "Successfully calculated ", rank);
+            } else {
+                return Response.buildFor("err", "No data retrieved", new ArrayList<>());
+            }
+        } else {
+            List<Rank> rank = rankRepository.findByLeagueEntity(leagueEntity)
+                    .stream()
+                    .map(RankUtil::buildFor)
                     .collect(Collectors.toList());
             return Response.buildFor("ok", "Successfully calculated ", rank);
-        } else {
-            return Response.buildFor("err", "No data retrieved", new ArrayList<>());
         }
     }
 

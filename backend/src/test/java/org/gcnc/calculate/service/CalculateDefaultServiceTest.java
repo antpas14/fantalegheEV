@@ -3,6 +3,8 @@ package org.gcnc.calculate.service;
 import org.gcnc.calculate.model.Properties;
 import org.gcnc.calculate.model.Request;
 import org.gcnc.calculate.model.Response;
+import org.gcnc.calculate.repository.LeagueRepository;
+import org.gcnc.calculate.repository.RankRepository;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,6 +23,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+//import org.gcnc.calculate.repository.LeagueRepository;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration
@@ -32,6 +36,12 @@ public class CalculateDefaultServiceTest {
     @Mock
     Properties properties;
 
+    @Mock
+    RankRepository rankRepository;
+
+    @Mock
+    LeagueRepository leagueRepository;
+
     @InjectMocks
     private CalculateDefaultService calculateService;
 
@@ -39,7 +49,11 @@ public class CalculateDefaultServiceTest {
     public void init() {
         MockitoAnnotations.initMocks(this);
         initializeProperties();
-        calculateService = new CalculateDefaultService(properties, webDriver);
+        calculateService = new CalculateDefaultService(properties,
+                webDriver,
+                leagueRepository,
+                rankRepository
+        );
     }
 
     @Test

@@ -9,3 +9,20 @@ properties:
   baseUrl: "http://leghe.fantacalcio.it/"
   calendarSuffix: "/calendario"
   seleniumUrl: "http://selenium:4444/wd/hub"
+
+spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation : false
+spring:
+  jpa:
+    properties:
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults : false;
+
+props:
+  url: jdbc:postgresql://postgres:5432/fantaleghe
+  driverClassname: org.postgresql.Driver
+  username: fantaleghe
+  password: fantaleghe
+  hbm2ddlAuto: validate
+  packagesToScan: org.gcnc.calculate
+  showSql: true

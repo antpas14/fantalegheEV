@@ -1,12 +1,14 @@
 package org.gcnc.calculate.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 import java.io.Serializable;
 
 @Getter
 @AllArgsConstructor
+@Builder
 public class Rank implements Serializable {
     private String team;
     private Double evPoints;
