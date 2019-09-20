@@ -48,7 +48,6 @@ public class CalculateDefaultServiceTest {
         File rankingFile = new File("src/test/resources/html/ranking.html");
         File calendarFile = new File("src/test/resources/html/calendar.html");
 
-
         String ranking = new String(Files.readAllBytes(Paths.get(rankingFile.getAbsolutePath())));
         String calendar = new String(Files.readAllBytes(Paths.get(calendarFile.getAbsolutePath())));
         Mockito.when(webDriver.getPageSource())
@@ -60,8 +59,8 @@ public class CalculateDefaultServiceTest {
         Response response = calculateService.calculateResponse(request);
         // Then
         Assert.assertEquals("ok", response.getStatus());
-        Assert.assertEquals("Sasha FC", response.getRank().get(0).getTeam());
-        Assert.assertEquals(new Double(51.00000000000001), response.getRank().get(0).getEvPoints());
+        Assert.assertEquals("Armata Democristiana Ancelottista", response.getRank().get(0).getTeam());
+        Assert.assertEquals(new Double(2.7142857142857144), response.getRank().get(0).getEvPoints());
     }
 
     @Test

@@ -93,7 +93,7 @@ public class CalculateDefaultService implements CalculateService {
         String url = properties.getBaseUrl() + leagueName + properties.getCalendarSuffix();
         String content = getWebPage(url);
         Document doc = Jsoup.parse(content);
-        Elements calendarDays = doc.select(".raised-2");
+        Elements calendarDays = doc.select(".calendar");
         return createMap(calendarDays);
     }
 
@@ -116,7 +116,7 @@ public class CalculateDefaultService implements CalculateService {
 
     private Map<String, Integer> getPoints(String leagueName) throws RemoteSiteException {
         try {
-            String url = properties.getBaseUrl() + leagueName;
+            String url = properties.getBaseUrl() + leagueName + properties.getRankingSuffix();
             String content = getWebPage(url);
             Document doc = Jsoup.parse(content);
             return getRankingTable(doc).stream()
@@ -148,6 +148,6 @@ public class CalculateDefaultService implements CalculateService {
     }
 
     private Elements getRankingTable(Document doc) {
-        return doc.select(".top-ten").get(0).children().get(1).children();
+        return doc.select(".ranking").get(0).children().get(0).children().get(1).children();
     }
 }
