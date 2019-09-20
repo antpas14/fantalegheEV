@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 public class Properties {
     private String baseUrl;
     private String calendarSuffix;
+    private String rankingSuffix;
 
     private String seleniumUrl;
 }
