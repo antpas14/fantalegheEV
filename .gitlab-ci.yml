@@ -1,0 +1,26 @@
+image: docker:latest
+services:
+  - docker:dind
+
+variables:
+  DOCKER_DRIVER: overlay
+  SPRING_PROFILES_ACTIVE: gitlab-ci
+
+stages:
+  - build
+  - package
+
+maven-build:
+  image: maven:3-jdk-8
+  stage: build
+  script: "mvn package -B"
+  artifacts:
+    paths:
+      - backend/target/*.jar
+
+docker-build:
+  stage: package
+  script:
+  - docker build -t registry.gitlab.com/antpas14/fantalegheev/backend . backend
+  - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
+  - docker push registry.gitlab.com/antpas14/fantalegheev/backend
