@@ -21,6 +21,6 @@ maven-build:
 docker-build:
   stage: package
   script:
-  - docker build -t registry.gitlab.com/antpas14/fantalegheev/backend . backend
+  - docker build -t registry.gitlab.com/antpas14/fantalegheev/backend ./backend
   - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
   - docker push registry.gitlab.com/antpas14/fantalegheev/backend
