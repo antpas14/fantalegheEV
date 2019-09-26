@@ -9,6 +9,7 @@ variables:
 stages:
   - build
   - package
+  - deploy
 
 maven-build:
   image: maven:3-jdk-8
@@ -24,3 +25,16 @@ docker-build:
   - docker build -t registry.gitlab.com/antpas14/fantalegheev/backend ./backend
   - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
   - docker push registry.gitlab.com/antpas14/fantalegheev/backend
+  
+step-deploy-staging:
+  stage: deploy
+  only:
+    - develop
+  tags:
+    - develop
+  script:
+    - sudo apt-get install -y python-pip
+    - sudo pip install docker-compose
+    - sudo docker image prune -f
+    - sudo docker-compose -f docker-compose.yml down
+    - sudo docker-compose -f docker-compose.yml up -d
