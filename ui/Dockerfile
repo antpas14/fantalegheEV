@@ -10,4 +10,4 @@ RUN npm install -g gulp
 COPY . .
 
 EXPOSE 3001
-CMD [ "gulp", "nodemon" ]
+CMD [ "gulp", "localhost" ]

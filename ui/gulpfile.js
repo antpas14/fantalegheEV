@@ -3,10 +3,26 @@ const tasks = require('gulp-task-listing');
 const nodemon = require('gulp-nodemon');
 const fs = require('fs');
 
-gulp.task('nodemon', function (cb) {
+gulp.task('localhost', function (cb) {
 	var started = false;
 	return nodemon({
-		script: 'webserver.js'
+		script: 'webserver.js',
+		args: ['localhost']
+	}).on('start', function () {
+		// to avoid nodemon being started multiple times
+		// thanks @matthisk
+		if (!started) {
+			cb();
+			started = true;
+		}
+	});
+});
+
+gulp.task('kubernetes', function (cb) {
+	var started = false;
+	return nodemon({
+		script: 'webserver.js',
+		args: ['fantaleghe-backend.svc.cluster.local']
 	}).on('start', function () {
 		// to avoid nodemon being started multiple times
 		// thanks @matthisk
