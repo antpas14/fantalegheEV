@@ -43,7 +43,7 @@ public class CalculateDefaultService implements CalculateService {
         try {
             points = getPoints(req.getLeagueName());
             evPoints = calculateEVRank(getResults(req.getLeagueName()));
-        } catch (RemoteSiteException e) {
+        } catch (RemoteSiteException | MalformedURLException e) {
             logger.error("Exception while retrieving data from remote URL");
             return Response.buildFor("err", "Exception while retrieving data", new ArrayList<>());
         }
