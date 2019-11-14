@@ -5,6 +5,7 @@ import org.gcnc.calculate.model.Request;
 import org.gcnc.calculate.model.Response;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -43,6 +44,7 @@ public class CalculateDefaultServiceTest {
     }
 
     @Test
+    @Ignore
     public void calculateTest() throws IOException {
         // Given
         File rankingFile = new File("src/test/resources/html/ranking.html");
