@@ -154,7 +154,7 @@ public class CalculateDefaultService implements CalculateService {
         return doc.select(".ranking").get(0).children().get(0).children().get(1).children();
     }
 
-    // TODO: create a new one instead of using the bean as a patch for fixing the timeout issue
+    // temporary fix to create a new one instead of using the bean as a patch for fixing the timeout issue
     private RemoteWebDriver getRemoteWebDriver() throws MalformedURLException {
         try {
             ChromeOptions options = new ChromeOptions();
