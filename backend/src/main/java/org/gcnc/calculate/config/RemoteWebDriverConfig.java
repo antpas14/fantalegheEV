@@ -29,7 +29,8 @@ public class RemoteWebDriverConfig {
             logger.info("Initializing remote web driver at url {}", properties.getSeleniumUrl());
             logger.trace("Base URL is {} ", properties.getBaseUrl());
             logger.trace("Calendar URL is {} ", properties.getBaseUrl() + properties.getCalendarSuffix());
-            return new RemoteWebDriver(new URL(properties.getSeleniumUrl()), options);
+            RemoteWebDriver webDriver = new RemoteWebDriver(new URL(properties.getSeleniumUrl()), options);
+            return webDriver;
         } catch (Exception e) {
             e.printStackTrace();
         }
