@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
 var request = require('request');
+var host = process.argv[2];
 
 // Define static routes
 app.use('/assets', express.static('src/assets'));
@@ -17,13 +18,15 @@ app.get('/', function(req, res) {
 
 app.get('/calculate', function(req, res, body) {
   console.log(req.query.league_name)
-  var newurl = 'http://fantaleghe-backend:8100/calculate?league_name=' + req.query.league_name;
+  var newurl = 'http://' + host + ':8100/calculate?league_name=' + req.query.league_name;
   request(newurl).pipe(res);
 });
 
 var server = require('http').createServer(app); 
 
 var port = 3001;
+console.log("ARGS", process.argv)
 console.log("Listening on " + port);
 server.listen(port);
+
 

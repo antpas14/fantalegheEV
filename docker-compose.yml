@@ -2,7 +2,7 @@ version: '3'
 
 services:
         fantaleghe-backend: 
-                image: fantaleghe-backend
+                image: registry.gitlab.com/antpas14/fantalegheev/backend
                 ports: 
                         - "8100:8100"
                 links:
@@ -10,7 +10,7 @@ services:
                 depends_on:
                         - selenium
         ui:
-                image: fantaleghe-ui
+                image: registry.gitlab.com/antpas14/fantalegheev/ui
                 ports: 
                         - "3001:3001"
                 links: 
