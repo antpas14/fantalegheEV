@@ -28,8 +28,8 @@ public class CalculateDefaultService implements CalculateService {
     private RemoteWebDriver webDriver;
 
     @Autowired
-    CalculateDefaultService(Properties properties, RemoteWebDriver remoteWebDriver) {
-        this.webDriver = remoteWebDriver;
+    CalculateDefaultService(Properties properties) {
+        // this.webDriver = remoteWebDriver;
         this.properties = properties;
     }
 
