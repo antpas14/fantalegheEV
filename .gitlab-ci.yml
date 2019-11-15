@@ -26,17 +26,17 @@ docker-build:
 
   script:
   - docker build -t registry.gitlab.com/antpas14/fantalegheev/backend ./backend
-  - docker build -t eu.gcr.io/kubernetes-254718/fantalegheev/backend ./backend
+# - docker build -t eu.gcr.io/kubernetes-254718/fantalegheev/backend ./backend
   - docker push registry.gitlab.com/antpas14/fantalegheev/backend
 
   - docker build -t registry.gitlab.com/antpas14/fantalegheev/ui ./ui
-  - docker build -t eu.gcr.io/kubernetes-254718/fantalegheev/ui ./ui
+# - docker build -t eu.gcr.io/kubernetes-254718/fantalegheev/ui ./ui
   - docker push registry.gitlab.com/antpas14/fantalegheev/ui
 
   # Log in to Google Container Registry
-  - echo "$SERVICE_ACCOUNT_KEY" > key.json
-  - docker login -u _json_key --password-stdin https://eu.gcr.io < key.json
-  - docker push registry.gitlab.com/antpas14/fantalegheev/backend
+#  - echo "$SERVICE_ACCOUNT_KEY" > key.json
+#  - docker login -u _json_key --password-stdin https://eu.gcr.io < key.json
+#  - docker push registry.gitlab.com/antpas14/fantalegheev/backend
 
 deploy:
   image: 'gcloud-with-envsubst:latest'
