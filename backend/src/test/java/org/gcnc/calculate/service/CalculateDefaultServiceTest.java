@@ -40,7 +40,7 @@ public class CalculateDefaultServiceTest {
     public void init() {
         MockitoAnnotations.initMocks(this);
         initializeProperties();
-        calculateService = new CalculateDefaultService(properties, webDriver);
+        calculateService = new CalculateDefaultService(properties);
     }
 
     @Test
