@@ -36,7 +36,7 @@ spec:
             - name: GRID_NEW_SESSION_WAIT_TIMEOUT
               value: "-1"
             - name: GRID_BROWSER_TIMEOUT
-              value: 120
+              value: "120"
             - name: SOMEBODY_CHANGE_ME
               value: "1"
 
