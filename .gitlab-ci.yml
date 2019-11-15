@@ -50,7 +50,7 @@ deploy:
     - gcloud config set project kubernetes-254718
     - gcloud config set container/cluster standard-cluster-1
     - gcloud config set compute/zone us-central1-a
-    - gcloud container clusters get-credentials my-cluster --zone us-central1-a
+    - gcloud container clusters get-credentials standard-cluster-1	 --zone us-central1-a
     # Do the deployment
     - cat kubernetes/deployment.yaml | envsubst | kubectl apply -f -
   environment:
