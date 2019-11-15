@@ -39,7 +39,7 @@ docker-build:
 #  - docker push registry.gitlab.com/antpas14/fantalegheev/backend
 
 deploy:
-  image: 'gcloud-with-envsubst:latest'
+  image: 'google/cloud-sdk:latest'
   stage: deploy
   variables:
     DOCKER_IMAGE_TAG: 'eu.gcr.io/my-project/my-application:latest'
