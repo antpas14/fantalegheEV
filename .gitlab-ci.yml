@@ -25,24 +25,15 @@ docker-build:
   - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
 
   script:
-  - docker build -t registry.gitlab.com/antpas14/fantalegheev/backend ./backend
-# - docker build -t eu.gcr.io/kubernetes-254718/fantalegheev/backend ./backend
-  - docker push registry.gitlab.com/antpas14/fantalegheev/backend
+  - docker build -t registry.gitlab.com/antpas14/fantalegheev/backend:$CI_COMMIT_SHORT_SHA ./backend
+  - docker push registry.gitlab.com/antpas14/fantalegheev/backend:$CI_COMMIT_SHORT_SHA
 
-  - docker build -t registry.gitlab.com/antpas14/fantalegheev/ui ./ui
-# - docker build -t eu.gcr.io/kubernetes-254718/fantalegheev/ui ./ui
-  - docker push registry.gitlab.com/antpas14/fantalegheev/ui
-
-  # Log in to Google Container Registry
-#  - echo "$SERVICE_ACCOUNT_KEY" > key.json
-#  - docker login -u _json_key --password-stdin https://eu.gcr.io < key.json
-#  - docker push registry.gitlab.com/antpas14/fantalegheev/backend
+  - docker build -t registry.gitlab.com/antpas14/fantalegheev/ui:$CI_COMMIT_SHORT_SHA ./ui
+  - docker push registry.gitlab.com/antpas14/fantalegheev/ui:$CI_COMMIT_SHORT_SHA
 
 deploy:
-  image: 'google/cloud-sdk:latest'
+  image: 'google/cloud-sdk:slim
   stage: deploy
-  variables:
-    DOCKER_IMAGE_TAG: 'eu.gcr.io/my-project/my-application:latest'
   script:
     # Authenticate with GKE
     - echo "$SERVICE_ACCOUNT_KEY" > key.json
@@ -50,8 +41,8 @@ deploy:
     - gcloud config set project kubernetes-254718
     - gcloud config set container/cluster standard-cluster-1
     - gcloud config set compute/zone us-central1-a
-    - gcloud container clusters get-credentials standard-cluster-1	 --zone us-central1-a
+    - gcloud container clusters get-credentials standard-cluster-1 --zone us-central1-a
     # Do the deployment
-    - cat kubernetes/deployment.yaml | kubectl apply -f -
+    - sed s/\%TAG\%/$CI_COMMIT_SHORT_SHA/g deployment.yaml | kubectl apply -f -
   environment:
     name: prod
