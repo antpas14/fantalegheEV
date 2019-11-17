@@ -74,7 +74,7 @@ spec:
             - name: environment
               value: kubernetes
             - name: SOMEBODY_CHANGE_ME
-              value: "1"
+              value: "2"
 ---
 kind: Service
 apiVersion: v1
