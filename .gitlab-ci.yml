@@ -43,6 +43,6 @@ deploy:
     - gcloud config set compute/zone us-central1-a
     - gcloud container clusters get-credentials standard-cluster-1 --zone us-central1-a
     # Do the deployment
-    - sed s/\%TAG\%/$CI_COMMIT_SHORT_SHA/g deployment.yaml | kubectl apply -f -
+    - sed s/\%TAG\%/$CI_COMMIT_SHORT_SHA/g kubernetes/deployment.yaml | kubectl apply -f -
   environment:
     name: prod
