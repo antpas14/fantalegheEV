@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: fantaleghe-backend
-          image: registry.gitlab.com/antpas14/fantalegheev/backend
+          image: registry.gitlab.com/antpas14/fantalegheev/backend:%TAG%
           ports:
             - containerPort: 8100
           env:
@@ -67,7 +67,7 @@ spec:
     spec:
       containers:
         - name: fantaleghe-ui
-          image: registry.gitlab.com/antpas14/fantalegheev/ui
+          image: registry.gitlab.com/antpas14/fantalegheev/ui:%TAG%
           ports:
             - containerPort: 3001
           env:
