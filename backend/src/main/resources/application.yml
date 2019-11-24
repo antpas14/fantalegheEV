@@ -9,4 +9,4 @@ properties:
   baseUrl: "http://leghe.fantacalcio.it/"
   calendarSuffix: "/calendario"
   rankingSuffix: "/classifica"
-  seleniumUrl: "http://selenium:4444/wd/hub"
+  seleniumUrl: "http://localhost:4444/wd/hub"
