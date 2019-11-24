@@ -22,7 +22,7 @@ gulp.task('kubernetes', function (cb) {
 	var started = false;
 	return nodemon({
 		script: 'webserver.js',
-		args: ['fantaleghe-backend.svc.cluster.local']
+		args: ['fantaleghe-backend']
 	}).on('start', function () {
 		// to avoid nodemon being started multiple times
 		// thanks @matthisk
