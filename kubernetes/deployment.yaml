@@ -75,6 +75,10 @@ spec:
               value: kubernetes
             - name: SOMEBODY_CHANGE_ME
               value: "2"
+      initContainers:
+        - name: init-ui
+          image: busybox:1.28
+          command: ['sh', '-c', 'until nslookup fantaleghe-backend.svc.cluster.local; do echo waiting for fantaleghe-backend.svc.cluster.local; sleep 2; done;']
 ---
 kind: Service
 apiVersion: v1
