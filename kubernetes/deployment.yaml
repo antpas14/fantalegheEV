@@ -39,6 +39,9 @@ spec:
               value: "120"
             - name: SOMEBODY_CHANGE_ME
               value: "1"
+        - name: postgres
+          image: postgres:9.6-alpine
+          
 
           volumeMounts:
             - mountPath: /dev/shm

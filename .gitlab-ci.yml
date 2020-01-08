@@ -17,7 +17,10 @@ maven-build:
   script: "mvn package -B"
   artifacts:
     paths:
-      - backend/target/*.jar
+      - backend/target/*.
+  only:
+    - master
+    - develop
 
 docker-build:
   stage: package
@@ -30,6 +33,9 @@ docker-build:
 
   - docker build -t registry.gitlab.com/antpas14/fantalegheev/ui:$CI_COMMIT_SHORT_SHA ./ui
   - docker push registry.gitlab.com/antpas14/fantalegheev/ui:$CI_COMMIT_SHORT_SHA
+  only:
+    - master
+    - develop
 
 deploy:
   image: 'google/cloud-sdk:latest'
@@ -46,3 +52,6 @@ deploy:
     - sed s/\%TAG\%/$CI_COMMIT_SHORT_SHA/g kubernetes/deployment.yaml | kubectl apply -f -
   environment:
     name: prod
+  only:
+    - master
+    - develop
