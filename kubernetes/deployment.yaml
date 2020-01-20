@@ -102,7 +102,7 @@ metadata:
 spec:
   selector:
     app: fantaleghe-ui
-  ports:reach service in the same kubernetes clustersudo docker run ubuntu apt-get install iputils-ping
+  ports:
     - protocol: TCP
       port: 3001
       targetPort: 3001
