@@ -100,11 +100,9 @@ metadata:
   namespace: default
   name: fantaleghe-ui
 spec:
-  type: ExternalName
-  externalName: culometro.pastena.co.uk
   selector:
     app: fantaleghe-ui
-  ports:
+  ports:reach service in the same kubernetes clustersudo docker run ubuntu apt-get install iputils-ping
     - protocol: TCP
       port: 3001
       targetPort: 3001
