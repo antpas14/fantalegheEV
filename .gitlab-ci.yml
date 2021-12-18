@@ -9,7 +9,6 @@ variables:
 stages:
   - build
   - package
-  - deploy
 
 maven-build:
   image: maven:3-jdk-8
@@ -30,19 +29,3 @@ docker-build:
 
   - docker build -t registry.gitlab.com/antpas14/fantalegheev/ui:$CI_COMMIT_SHORT_SHA ./ui
   - docker push registry.gitlab.com/antpas14/fantalegheev/ui:$CI_COMMIT_SHORT_SHA
-
-deploy:
-  image: 'google/cloud-sdk:latest'
-  stage: deploy
-  script:
-    # Authenticate with GKE
-    - echo "$SERVICE_ACCOUNT_KEY" > key.json
-    - gcloud auth activate-service-account --key-file=key.json
-    - gcloud config set project kubernetes-254718
-    - gcloud config set container/cluster standard-cluster-1
-    - gcloud config set compute/zone us-central1-a
-    - gcloud container clusters get-credentials standard-cluster-1 --zone us-central1-a
-    # Do the deployment
-    - sed s/\%TAG\%/$CI_COMMIT_SHORT_SHA/g kubernetes/deployment.yaml | kubectl apply -f -
-  environment:
-    name: prod
