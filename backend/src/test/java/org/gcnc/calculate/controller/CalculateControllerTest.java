@@ -1,7 +1,6 @@
 package org.gcnc.calculate.controller;
 
 import org.gcnc.calculate.model.Request;
-import org.gcnc.calculate.model.Response;
 import org.gcnc.calculate.service.CalculateService;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,6 +15,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 
@@ -41,13 +41,9 @@ public class CalculateControllerTest {
 
     @Test
     public void calculateControllerSuccess() throws Exception {
-        Mockito.when(calculateService.calculateResponse(Mockito.any(Request.class))).thenReturn(createResponse());
+        Mockito.when(calculateService.calculateResponse(Mockito.any(Request.class))).thenReturn(Mono.just(new ArrayList<>()));
         mockMvc = MockMvcBuilders.standaloneSetup(calculateController).build();
         mockMvc.perform(MockMvcRequestBuilders.get("/calculate?league_name=abc"))
                 .andExpect(status().is(200));
-    }
-
-    private Response createResponse() {
-        return Response.buildFor("ok", "message", new ArrayList<>());
     }
 }
