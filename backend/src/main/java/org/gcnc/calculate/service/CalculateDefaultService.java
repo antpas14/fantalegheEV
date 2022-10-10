@@ -1,7 +1,7 @@
 package org.gcnc.calculate.service;
 
 import org.gcnc.calculate.fetcher.Fetcher;
-import org.gcnc.calculate.model.Properties;
+import org.gcnc.calculate.config.CalculateProperties;
 import org.gcnc.calculate.model.Rank;
 import org.gcnc.calculate.model.Request;
 import org.gcnc.calculate.model.TeamResult;
@@ -24,13 +24,13 @@ import java.util.stream.Collectors;
 @Component
 public class CalculateDefaultService implements CalculateService {
 
-    private Properties properties;
+    private CalculateProperties calculateProperties;
     private Fetcher fetcher;
 
     @Autowired
-    CalculateDefaultService(Properties properties, Fetcher fetcher) {
+    CalculateDefaultService(CalculateProperties calculateProperties, Fetcher fetcher) {
         this.fetcher = fetcher;
-        this.properties = properties;
+        this.calculateProperties = calculateProperties;
     }
 
     private final Logger logger = LoggerFactory.getLogger(CalculateDefaultService.class);
@@ -81,7 +81,7 @@ public class CalculateDefaultService implements CalculateService {
     }
 
     private Mono<Map<Integer, List<TeamResult>>> getResults(String leagueName) {
-        String url = properties.getBaseUrl() + leagueName + properties.getCalendarSuffix();
+        String url = calculateProperties.getBaseUrl() + leagueName + calculateProperties.getCalendarSuffix();
         return fetcher.fetchResponse(url)
                 .map(Jsoup::parse)
                 .map(doc -> doc.select(".calendar"))
@@ -103,7 +103,7 @@ public class CalculateDefaultService implements CalculateService {
     }
 
     private Mono<Map<String, Integer>> getPoints(String leagueName) {
-        return fetcher.fetchResponse(properties.getBaseUrl() + leagueName + properties.getRankingSuffix())
+        return fetcher.fetchResponse(calculateProperties.getBaseUrl() + leagueName + calculateProperties.getRankingSuffix())
                 .map(Jsoup::parse)
                 .map(doc -> getRankingTable(doc).stream()
                         .collect(Collectors.toMap(this::getTeamNameFromRankingTable, this::getTeamPointsFromRankingTable)
