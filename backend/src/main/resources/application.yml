@@ -6,6 +6,9 @@ logging:
   level:
     org.springframework.web: DEBUG
 properties:
-  baseUrl: "http://leghe.fantacalcio.it/"
-  calendarSuffix: "/calendario"
-  rankingSuffix: "/classifica"
+  calculate:
+    baseUrl: "http://leghe.fantacalcio.it/"
+    calendarSuffix: "/calendario"
+    rankingSuffix: "/classifica"
+  fetcher:
+    fetcher: "http://localhost:5000"
