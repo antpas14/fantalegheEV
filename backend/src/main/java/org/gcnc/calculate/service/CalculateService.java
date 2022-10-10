@@ -1,8 +1,11 @@
 package org.gcnc.calculate.service;
 
+import org.gcnc.calculate.model.Rank;
 import org.gcnc.calculate.model.Request;
-import org.gcnc.calculate.model.Response;
+import reactor.core.publisher.Mono;
+
+import java.util.List;
 
 public interface CalculateService {
-    Response calculateResponse(Request req);
+    Mono<List<Rank>> calculateResponse(Request req);
 }
