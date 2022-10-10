@@ -53,12 +53,7 @@ app.controller('HomeController', ['$scope', '$http', 'ENV', function($scope, $ht
             data: JSON.stringify(data),
             headers: {'Content-Type': 'application/json'}
         }).then(function(response) {
-            if (response.data.status == "ok") {
-                $scope.table_content = response.data.rank
-            } else {
-                $scope.error_message = response.data.message;
-                $scope.show_error = true;
-            }
+            $scope.table_content = response.data
         })
     }
 
