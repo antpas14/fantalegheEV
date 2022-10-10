@@ -20,13 +20,13 @@
     <name>root</name>
     <description>Demo project for Spring Boot</description>
 
-    <calculateProperties>
+    <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <project.build.finalName>0.0.1-SNAPSHOT</project.build.finalName>
         <fully.qualified.main.class>org.gcnc.calculate.Application</fully.qualified.main.class>
         <java.version>11</java.version>
-    </calculateProperties>
+    </properties>
 
     <build>
         <plugins>
