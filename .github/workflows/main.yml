@@ -42,7 +42,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: jar-artifact
-          path: ${{ github.workspace }}/my-app/target/*.jar
+          path: ${{ github.workspace }}/backend/target/*.jar
           retention-days: 1
       - name: Build and push
         uses: docker/build-push-action@v3
