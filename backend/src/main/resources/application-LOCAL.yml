@@ -1,11 +1,2 @@
-server:
-  port: 8100
-  servlet:
-    context-path: /
-logging:
-  level:
-    org.springframework.web: DEBUG
-properties:
-  baseUrl: "http://leghe.fantacalcio.com/"
-  calendarSuffix: "/calendario"
-  rankingSuffix: "/classifica"
+fetcher:
+  fetcher: "http://localhost:5000"
