@@ -47,7 +47,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
-          context: .
+          context: ./ui/
           file: ./ui/Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/fantaleghe-ui:latest
