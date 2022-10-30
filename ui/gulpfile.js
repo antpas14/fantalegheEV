@@ -18,7 +18,7 @@ gulp.task('localhost', function (cb) {
 	});
 });
 
-gulp.task('kubernetes', function (cb) {
+gulp.task('compose', function (cb) {
 	var started = false;
 	return nodemon({
 		script: 'webserver.js',
