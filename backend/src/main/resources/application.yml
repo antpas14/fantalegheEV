@@ -11,4 +11,4 @@ properties:
     calendarSuffix: "/calendario"
     rankingSuffix: "/classifica"
   fetcher:
-    fetcher: "http://web-fetcher:5000"
+    url: "http://web-fetcher:5000"
