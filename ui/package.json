@@ -9,12 +9,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "angular": "^1.7.3",
+    "angular": "^1.7.9",
     "bootstrap": "^3.3.7",
     "express": "^4.16.3",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.2",
     "gulp-nodemon": "^2.2.1",
     "gulp-task-listing": "^1.1.0",
     "request": "^2.88.0"
+  },
+  "overrides": {
+    "graceful-fs": "^4.2.10"
   }
 }
