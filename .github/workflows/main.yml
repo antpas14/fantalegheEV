@@ -35,8 +35,7 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
       - name: Build with Maven
-        context: ./backend/
-        run: mvn clean install
+        run: mvn -f backend clean install
       - name: Temporarily save jar artifact
         uses: actions/upload-artifact@v2
         with:
