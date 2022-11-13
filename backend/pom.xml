@@ -21,7 +21,7 @@
         <fully.qualified.main.class>org.gcnc.calculate.Application</fully.qualified.main.class>
         <java.version>11</java.version>
     </properties>
-    
+
     <build>
         <plugins>
             <plugin>
