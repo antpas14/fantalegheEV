@@ -25,9 +25,7 @@ import static org.mockito.ArgumentMatchers.any;
 public class ParserImplTest {
     @Mock
     private Fetcher fetcher;
-    @Mock
-    private CalculateProperties calculateProperties;
-    @InjectMocks
+    private CalculateProperties calculateProperties = new CalculateProperties();
     private ParserImpl parser;
     @BeforeEach
     public void init() {
