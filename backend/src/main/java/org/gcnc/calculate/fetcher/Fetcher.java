@@ -11,7 +11,7 @@ import reactor.core.publisher.Mono;
 
 @Component
 public class Fetcher {
-    private WebClient webClient;
+    private final WebClient webClient;
 
     public Fetcher(WebClient.Builder webClientBuilder, FetcherProperties fetcherProperties) {
         this.webClient = webClientBuilder.baseUrl(fetcherProperties.getUrl()).build();
@@ -22,7 +22,7 @@ public class Fetcher {
                 .uri("/retrieve")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(BodyInserters.fromObject(new Request(url)))
+                .body(BodyInserters.fromValue(new Request(url)))
                 .retrieve()
                 .bodyToMono(String.class).single();
     }
