@@ -34,9 +34,10 @@ public class CalculateServiceImpl implements CalculateService {
 
     private Map<String, Double> calculateEVRank(Map<Integer, List<TeamResult>> results) {
         final Map<String, Double> evRank = new HashMap<>();
-        results.get(0)
+        // Map starts from day 1
+        results.get(1)
                 .forEach(tr -> evRank.put(tr.getTeam(), 0D));
-        final int combinations = results.get(0).size() - 1;
+        final int combinations = results.get(1).size() - 1;
         results.forEach((k, v) -> {
             for (int i = 0; i < v.size(); i++) {
                 TeamResult t1 = v.get(i);
