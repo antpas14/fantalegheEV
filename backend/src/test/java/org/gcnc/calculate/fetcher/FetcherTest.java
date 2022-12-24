@@ -7,6 +7,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.reactive.function.BodyInserter;
+import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
@@ -29,6 +30,7 @@ public class FetcherTest {
         FetcherProperties properties = new FetcherProperties();
         properties.setUrl("url-test");
         when(builder.baseUrl(anyString())).thenReturn(builder);
+        when(builder.exchangeStrategies((ExchangeStrategies) any())).thenReturn(builder);
         when(builder.build()).thenReturn(webClient);
         fetcher = new Fetcher(builder, properties);
     }
