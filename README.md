@@ -1,3 +1,4 @@
+[![Build passing](https://github.com/antpas14/fantalegheEV/actions/workflows/master.yml/badge.svg)]
 [![Coverage Status](https://codecov.io/gh/antpas14/fantalegheEV/branch/master/graph/badge.svg?token=Vq0xlNvpFJ)](https://codecov.io/gh/antpas14/fantalegheEV/branch/master/graph/badge.svg?token=Vq0xlNvpFJ)
 
 # Fantaleghe EV
