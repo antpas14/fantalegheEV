@@ -43,10 +43,10 @@ public class ParserImplTest {
 
         Request request = new Request("league-name");
         // When / Then
-        StepVerifier.create(parser.getResults(request.getLeagueName()))
+        StepVerifier.create(parser.getResults(request.leagueName()))
                 .assertNext(response -> {
-                    assertEquals("Uniao Sao Joao", response.get(1).get(0).getTeam());
-                    assertEquals(3, response.get(1).get(0).getGoal());
+                    assertEquals("Uniao Sao Joao", response.get(1).get(0).team());
+                    assertEquals(3, response.get(1).get(0).goal());
                 })
                 .verifyComplete();
          }
@@ -59,7 +59,7 @@ public class ParserImplTest {
                 .thenReturn(Mono.just(ranking));
         Request request = new Request("league-name");
 
-        StepVerifier.create(parser.getPoints(request.getLeagueName()))
+        StepVerifier.create(parser.getPoints(request.leagueName()))
                 .assertNext(response -> {
                     assertEquals(17, response.get("Uniao Sao Joao"));
                     assertEquals(11, response.get("Milan"));

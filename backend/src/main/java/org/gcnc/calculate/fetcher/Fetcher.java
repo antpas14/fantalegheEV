@@ -3,6 +3,7 @@ package org.gcnc.calculate.fetcher;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.gcnc.calculate.fetcher.config.FetcherProperties;
+import org.gcnc.calculate.model.Request;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserters;
@@ -30,11 +31,5 @@ public class Fetcher {
                 .body(BodyInserters.fromValue(new Request(url)))
                 .retrieve()
                 .bodyToMono(String.class).single();
-    }
-
-    @Data
-    @AllArgsConstructor
-    private static class Request {
-        private String url;
     }
 }
