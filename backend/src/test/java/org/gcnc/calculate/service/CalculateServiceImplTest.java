@@ -43,11 +43,11 @@ public class CalculateServiceImplTest {
         StepVerifier.create(calculateService.calculateResponse(request))
                 .assertNext(response -> {
                     Rank teamRank = response.stream()
-                            .filter(x -> "B".equals(x.getTeam()))
+                            .filter(teamRanking -> "B".equals(teamRanking.team()))
                             .findFirst()
                             .get();
-                    assertEquals("B", teamRank.getTeam());
-                    assertEquals(Double.parseDouble("1.0"), teamRank.getEvPoints());
+                    assertEquals("B", teamRank.team());
+                    assertEquals(Double.parseDouble("1.0"), teamRank.evPoints());
                 })
                 .verifyComplete();
     }
