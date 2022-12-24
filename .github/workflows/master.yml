@@ -1,4 +1,4 @@
-name: CI_master
+name: master
 
 # Controls when the workflow will run
 on:

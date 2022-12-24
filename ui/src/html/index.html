@@ -20,47 +20,37 @@
 <body>
 <div th:replace="fragments/head"></div>
 
-<div class="container" ng-app="fantalegheEV" ng-controller="HomeController">
-    <div>
-        <div class="row">
-            <div class="col-md-4">
-                <label>Nome lega</label>
-                <input class="form-control" id="league_name" ng-model="league_name" ng-keyup="show_error = false" type="text"/>
+    <div class="container" ng-app="fantalegheEV" ng-controller="HomeController">
+        <div>
+            <div class="row">
+                <div class="col-md-4">
+                    <label>League name</label>
+                    <input class="form-control" id="league_name" ng-model="league_name" ng-keyup="show_error = false" type="text"/>
+                </div>
+            <div class="row">
+                <div id="error-msg" class="col-md-10 alert alert-danger" ng-show="show_error">
+                    {{error_message}}
+                </div>
             </div>
-<!--            <div class="col-md-2">
-                <label>Soglia primo gol</label>
-                <input class="form-control" id="first_goal_threshold" ng-model="first_goal_threshold" ng-keyup="show_error = false" type="text"/>
+            <hr/>
+            <div class="row">
+                <div class="col-md-2">
+                    <button id="calculate" class="btn btn-primary" ng-click="calculate()">Calculate</button>
+                </div>
             </div>
-            <div class="col-md-2">
-                <label>Soglia per ogni gol</label>
-                <input class="form-control" id="goal_threshold" ng-model="goal_threshold" ng-keyup="show_error = false" type="text"/>
-            </div>
-        </div>
-        -->
-        <div class="row">
-            <div id="error-msg" class="col-md-10 alert alert-danger" ng-show="show_error">
-                {{error_message}}
-            </div>
-        </div>
-        <hr/>
-        <div class="row">
-            <div class="col-md-2">
-                <button id="calculate" class="btn btn-primary" ng-click="calculate()">Calcola</button>
-            </div>
-        </div>
-        <hr/>
-        <div class="row">
-            <div class="col-md-12" ng-hide="table_content.length == 0">
-                <table class="table table-condensed">
-                    <th>Squadra</th><th>Punti attesi</th><th>Punti</th><th>Differenza</th>
-                    <tr ng-repeat="row in table_content">
-                        <td>{{row.team}}</td><td>{{row.evPoints | number:2}} </td><td>{{row.points}}</td><td>{{(row.points - row.evPoints) | number:2}}</td>
-                    </tr>
-                </table>
+            <hr/>
+            <div class="row">
+                <div class="col-md-12" ng-hide="table_content.length == 0">
+                    <table class="table table-condensed">
+                        <th>Team</th><th>Expected points</th><th>Points</th><th>Difference</th>
+                        <tr ng-repeat="row in table_content">
+                            <td>{{row.team}}</td><td>{{row.evPoints | number:2}} </td><td>{{row.points}}</td><td>{{(row.points - row.evPoints) | number:2}}</td>
+                        </tr>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
 </body>
 </html>
