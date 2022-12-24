@@ -21,6 +21,6 @@ public class CalculateController {
     @RequestMapping(value = "/calculate", method = RequestMethod.GET)
     public Mono<ResponseEntity<Mono<List<Rank>>>> calculateGet(@RequestParam("league_name") String leagueName) {
         log.info("Called method /calculate");
-        return Mono.just(ResponseEntity.ok(calculateService.calculateResponse(Request.buildFor(leagueName))));
+        return Mono.just(ResponseEntity.ok(calculateService.calculateResponse(new Request(leagueName))));
     }
 }

@@ -20,15 +20,15 @@ public class CalculateServiceImpl implements CalculateService {
     private final Parser parser;
     @Override
     public Mono<List<Rank>> calculateResponse(Request req) {
-        log.info("New request for league {}", req.getLeagueName());
-        return Mono.zip(parser.getResults(req.getLeagueName()), parser.getPoints(req.getLeagueName()))
+        log.info("New request for league {}", req.leagueName());
+        return Mono.zip(parser.getResults(req.leagueName()), parser.getPoints(req.leagueName()))
                 .map(resultsAndPointsTuple -> getEVRanking(calculateEVRank(resultsAndPointsTuple.getT1()), resultsAndPointsTuple.getT2()));
     }
 
     private List<Rank> getEVRanking(final Map<String, Double> evPoints, final Map<String, Integer> points) {
         return evPoints.keySet().stream()
                 .map(t -> new Rank(t, evPoints.get(t), points.get(t)))
-                .sorted((r1, r2) -> r2.getPoints() - r1.getPoints())
+                .sorted((r1, r2) -> r2.points() - r1.points())
                 .collect(Collectors.toList());
     }
 
@@ -36,7 +36,7 @@ public class CalculateServiceImpl implements CalculateService {
         final Map<String, Double> evRank = new HashMap<>();
         // Map starts from day 1
         results.get(1)
-                .forEach(tr -> evRank.put(tr.getTeam(), 0D));
+                .forEach(tr -> evRank.put(tr.team(), 0D));
         final int combinations = results.get(1).size() - 1;
         results.forEach((k, v) -> {
             for (int i = 0; i < v.size(); i++) {
@@ -48,16 +48,16 @@ public class CalculateServiceImpl implements CalculateService {
                         points += calculateMatchPoints(t1, t2);
                     }
                 }
-                evRank.put(t1.getTeam(), (points / combinations) + evRank.get(t1.getTeam()));
+                evRank.put(t1.team(), (points / combinations) + evRank.get(t1.team()));
             }
         });
         return evRank;
     }
 
     private Double calculateMatchPoints(TeamResult t1, TeamResult t2){
-        if (t1.getGoal() > t2.getGoal()) {
+        if (t1.goal() > t2.goal()) {
             return 3D;
-        } else if (t1.getGoal().equals(t2.getGoal())) {
+        } else if (t1.goal() == t2.goal()) {
             return 1D;
         } else {
             return 0D;
