@@ -42,9 +42,9 @@ Using the algorithm, we will have a new ranking:
     TeamD: 0 + 0 + 0 = 0/3 = 0
     
 ### Sites screenshots
+UI is quite basic and just requires the league name
 
 ![Homepage](docs/images/fantaleghe_empty.png)
-UI is quite basic and just requires the league name
 
 Then click on the calculate button
 
