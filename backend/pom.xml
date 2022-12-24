@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.0.0</version>
+        <version>3.0.1</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -108,14 +108,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
-            <version>3.0.0</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <version>3.0.0</version>
-            <scope>test</scope>
+            <version>3.0.1</version>
         </dependency>
 
         <dependency>
@@ -134,7 +127,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <version>3.0.0</version>
+            <version>3.0.1</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

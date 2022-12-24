@@ -1,4 +1,4 @@
-FROM openjdk:11
+FROM openjdk:17
 VOLUME /tmp
 
 ADD backend/target/backend-0.0.1-SNAPSHOT.jar app.jar
