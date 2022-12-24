@@ -29,7 +29,7 @@ public class CalculateServiceImplTest {
     @Test
     public void fetchRanking() {
         // Given
-        Map<Integer, List<TeamResult>> results = Map.of(0,
+        Map<Integer, List<TeamResult>> results = Map.of(1,
                 List.of(new TeamResult("A", 3),
                         new TeamResult("B", 2),
                         new TeamResult("C", 3),
