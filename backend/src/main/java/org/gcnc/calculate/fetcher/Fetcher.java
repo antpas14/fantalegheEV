@@ -1,7 +1,5 @@
 package org.gcnc.calculate.fetcher;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import org.gcnc.calculate.fetcher.config.FetcherProperties;
 import org.gcnc.calculate.model.Request;
 import org.springframework.http.MediaType;
@@ -16,7 +14,7 @@ public class Fetcher {
     private final WebClient webClient;
 
     public Fetcher(WebClient.Builder webClientBuilder, FetcherProperties fetcherProperties) {
-        this.webClient = webClientBuilder.baseUrl(fetcherProperties.getUrl())
+        this.webClient = webClientBuilder.baseUrl(fetcherProperties.url())
                 .exchangeStrategies(ExchangeStrategies.builder()
                         .codecs(codecs -> codecs.defaultCodecs().maxInMemorySize(16 * 1024 * 1024))
                         .build())

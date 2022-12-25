@@ -29,7 +29,6 @@ public class ParserImpl implements Parser {
         String url = calculateProperties.getBaseUrl() + leagueName + calculateProperties.getCalendarSuffix();
         return fetcher.fetchResponse(url)
                 .map(Jsoup::parse)
-                .map(doc -> doc.select(".calendar"))
                 .map(doc -> doc.select(".match-frame"))
                 .map(this::createResultsMap);
     }
@@ -38,39 +37,27 @@ public class ParserImpl implements Parser {
         return fetcher.fetchResponse(calculateProperties.getBaseUrl() + leagueName + calculateProperties.getRankingSuffix())
                 .map(Jsoup::parse)
                 .map(doc -> getRankingTable(doc).stream()
-                        .collect(Collectors.toMap(this::getTeamNameFromRankingTable, this::getTeamPointsFromRankingTable)
-                        ));
+                        .collect(Collectors.toMap(this::getTeamNameFromRankingTable, this::getTeamPointsFromRankingTable)));
     }
 
     private Map<Integer, List<TeamResult>> createResultsMap(Elements calendarDays) {
         AtomicInteger counter = new AtomicInteger();
         return calendarDays.stream()
-                .map(c-> c.select(".match"))
-                .map(m -> m.select(".team").stream()
-                        .filter(this::isValidTeamName)
-                        .filter(this::isValidResult)
-                        .map(t -> new TeamResult(getTeamNameFromMatch(t), getTeamPointsFromMatch(t)))
+                .map(calendarDay -> calendarDay.select(".match"))
+                .map(match -> match.select(".team").stream()
+                        .map(team -> new TeamResult(getTeamNameFromMatch(team), getTeamPointsFromMatch(team)))
                         .collect(Collectors.toList()))
                 .filter(l -> !l.isEmpty())
                 .collect(Collectors.toMap(m-> counter.incrementAndGet(), m -> m));
     }
 
-
     // Utils methods
-    private boolean isValidTeamName(Element t) {
-        return t.select(".team-score").size() > 0 && !t.select(".team-score").get(0).text().equals("");
-    }
-
     private String getTeamNameFromMatch(Element t) {
         return t.select(".team-name").get(0).text();
     }
 
     private Integer getTeamPointsFromMatch(Element t) {
         return Integer.parseInt(t.select(".team-score").get(0).text());
-    }
-
-    private boolean isValidResult(Element t) {
-        return Double.parseDouble(t.select(".team-fpt").text()) > 0.0 && !t.select(".team-fpt").get(0).text().equals("");
     }
 
     private String getTeamNameFromRankingTable(Element e) {
