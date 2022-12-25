@@ -1,7 +1,5 @@
 package org.gcnc.calculate.fetcher;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import org.gcnc.calculate.fetcher.config.FetcherProperties;
 import org.gcnc.calculate.model.Request;
 import org.springframework.http.MediaType;
