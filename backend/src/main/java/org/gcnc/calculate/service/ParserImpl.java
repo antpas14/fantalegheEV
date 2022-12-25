@@ -51,7 +51,6 @@ public class ParserImpl implements Parser {
                         .filter(this::isValidResult)
                         .map(t -> new TeamResult(getTeamNameFromMatch(t), getTeamPointsFromMatch(t)))
                         .collect(Collectors.toList()))
-                .filter(l -> !l.isEmpty())
                 .collect(Collectors.toMap(m-> counter.incrementAndGet(), m -> m));
     }
 
