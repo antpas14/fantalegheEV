@@ -47,7 +47,6 @@ public class ParserImpl implements Parser {
                 .map(match -> match.select(".team").stream()
                         .map(team -> new TeamResult(getTeamNameFromMatch(team), getTeamPointsFromMatch(team)))
                         .collect(Collectors.toList()))
-                .filter(l -> !l.isEmpty())
                 .collect(Collectors.toMap(m-> counter.incrementAndGet(), m -> m));
     }
 
