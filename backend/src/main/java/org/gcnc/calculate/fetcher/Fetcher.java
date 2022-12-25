@@ -14,7 +14,7 @@ public class Fetcher {
     private final WebClient webClient;
 
     public Fetcher(WebClient.Builder webClientBuilder, FetcherProperties fetcherProperties) {
-        this.webClient = webClientBuilder.baseUrl(fetcherProperties.url())
+        this.webClient = webClientBuilder.baseUrl(fetcherProperties.getUrl())
                 .exchangeStrategies(ExchangeStrategies.builder()
                         .codecs(codecs -> codecs.defaultCodecs().maxInMemorySize(16 * 1024 * 1024))
                         .build())

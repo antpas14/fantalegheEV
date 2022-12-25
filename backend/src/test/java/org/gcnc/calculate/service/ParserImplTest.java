@@ -20,12 +20,14 @@ import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class ParserImplTest {
     @Mock
     private Fetcher fetcher;
-    private CalculateProperties calculateProperties = new CalculateProperties();
+    @Mock
+    private CalculateProperties calculateProperties;
     private ParserImpl parser;
     @BeforeEach
     public void init() {
@@ -38,7 +40,7 @@ public class ParserImplTest {
         // Given
         File calendarFile = new File("src/test/resources/html/calendar.html");
         String calendar = new String(Files.readAllBytes(Paths.get(calendarFile.getAbsolutePath())));
-        Mockito.when(fetcher.fetchResponse(any()))
+        when(fetcher.fetchResponse(any()))
                 .thenReturn(Mono.just(calendar));
 
         Request request = new Request("league-name");
@@ -55,7 +57,7 @@ public class ParserImplTest {
     public void getPointsTest() throws IOException {
         File rankingFile = new File("src/test/resources/html/ranking.html");
         String ranking = new String(Files.readAllBytes(Paths.get(rankingFile.getAbsolutePath())));
-        Mockito.when(fetcher.fetchResponse(any()))
+        when(fetcher.fetchResponse(any()))
                 .thenReturn(Mono.just(ranking));
         Request request = new Request("league-name");
 
@@ -69,7 +71,6 @@ public class ParserImplTest {
     }
 
     private void initializeProperties() {
-        calculateProperties.setBaseUrl("http://baseurl");
-        calculateProperties.setCalendarSuffix("/calendar");
+        when(calculateProperties.getBaseUrl()).thenReturn("http://baseurl");
     }
 }
