@@ -23,13 +23,12 @@ public class FetcherTest {
     private WebClient webClient;
     @Mock
     private WebClient.Builder builder;
-    @Mock
-    private FetcherProperties fetcherProperties;
     private Fetcher fetcher;
 
     @BeforeEach
     void setup() {
-        when(fetcherProperties.getUrl()).thenReturn("url");
+        FetcherProperties fetcherProperties = new FetcherProperties();
+        fetcherProperties.setUrl("url");
         when(builder.baseUrl(anyString())).thenReturn(builder);
         when(builder.exchangeStrategies((ExchangeStrategies) any())).thenReturn(builder);
         when(builder.build()).thenReturn(webClient);

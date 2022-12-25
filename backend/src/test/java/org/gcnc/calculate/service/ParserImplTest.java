@@ -6,9 +6,7 @@ import org.gcnc.calculate.model.Request;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
@@ -26,7 +24,6 @@ import static org.mockito.Mockito.when;
 public class ParserImplTest {
     @Mock
     private Fetcher fetcher;
-    @Mock
     private CalculateProperties calculateProperties;
     private ParserImpl parser;
     @BeforeEach
@@ -71,6 +68,7 @@ public class ParserImplTest {
     }
 
     private void initializeProperties() {
-        when(calculateProperties.getBaseUrl()).thenReturn("http://baseurl");
+        calculateProperties = new CalculateProperties();
+        calculateProperties.setBaseUrl("baseurl");
     }
 }
