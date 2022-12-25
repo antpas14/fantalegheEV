@@ -27,8 +27,7 @@ public class FetcherTest {
 
     @BeforeEach
     void setup() {
-        FetcherProperties properties = new FetcherProperties();
-        properties.setUrl("url-test");
+        FetcherProperties properties = new FetcherProperties("url-test");
         when(builder.baseUrl(anyString())).thenReturn(builder);
         when(builder.exchangeStrategies((ExchangeStrategies) any())).thenReturn(builder);
         when(builder.build()).thenReturn(webClient);
