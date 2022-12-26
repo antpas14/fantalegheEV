@@ -35,7 +35,7 @@ public class ParserImplTest {
     @Test
     public void getResultsTest() throws IOException {
         // Given
-        File calendarFile = new File("src/test/resources/html/calendar.html");
+        File calendarFile = new File("src/test/resources/html/calendar.txt");
         String calendar = new String(Files.readAllBytes(Paths.get(calendarFile.getAbsolutePath())));
         when(fetcher.fetchResponse(any()))
                 .thenReturn(Mono.just(calendar));
@@ -52,7 +52,7 @@ public class ParserImplTest {
 
     @Test
     public void getPointsTest() throws IOException {
-        File rankingFile = new File("src/test/resources/html/ranking.html");
+        File rankingFile = new File("src/test/resources/html/ranking.txt");
         String ranking = new String(Files.readAllBytes(Paths.get(rankingFile.getAbsolutePath())));
         when(fetcher.fetchResponse(any()))
                 .thenReturn(Mono.just(ranking));
