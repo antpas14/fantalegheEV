@@ -4,9 +4,10 @@
 # Fantaleghe EV
 
 This project is a web application that permits to recalculate a fantasy league rank in a *fair* way.
-This application backend runs on <a href="spring.io">Spring Framework</a> and uses Java library <a href="https://jsoup.org">jsoup</a> to perform HTML parsing, while frontend is realized using <a href="https://angularjs.org/">AngularJs</a>.
-
+This application backend runs on <a href="spring.io">Spring Framework</a> and uses Java library <a href="https://jsoup.org">jsoup</a> to perform HTML parsing
 The app needs to connect to an app like <a href="https://github.com/antpas14/webFetcher">webFetcher</a>, a simple app that returns the HTML of the requested page after some javascript rendering is executed.
+Frontend for the application is realized using <a href="https://angularjs.org/">AngularJs</a> and can be found <a href="https://github.com/antpas14/fantalegheEV-ui">here</a>
+
 In the provided docker-compose.yml there is an example setup that can be used to run it locally. 
 
 This application analyzes football fantasy league hosted on <a href="http://leghe.fantacalcio.it">leghe.fantacalcio.it</a>. I have no relationship with them.  
