@@ -14,13 +14,13 @@ coverage:
 
 flags:
   # filter the folder(s) you wish to measure by that flag
-  backend:
+  src:
     # only include files in the backend folder
     paths:
-      - src/main/java
+      - main/java
   tests:
     paths:
-      - src/main/test
+      - main/test
 
 parsers:
   gcov:
