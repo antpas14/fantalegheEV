@@ -33,7 +33,7 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
       - name: Build with Maven
-        run: mvn -f clean install
+        run: mvn clean install
       - name: Temporarily save jar artifact
         uses: actions/upload-artifact@v2
         with:
