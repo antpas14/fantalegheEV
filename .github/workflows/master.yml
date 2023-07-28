@@ -41,7 +41,7 @@ jobs:
 
       - name: Build with Maven
         run: mvn clean install -s $HOME/.m2/settings.xml
-        
+
       - name: Temporarily save jar artifact
         uses: actions/upload-artifact@v2
         with:
