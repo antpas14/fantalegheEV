@@ -25,10 +25,9 @@ jobs:
           MAVEN_TOKEN: ${{ secrets.MAVEN_PAT }}
         run: |
           echo "<settings><servers><server><id>github</id><username>\${env.MAVEN_USERNAME}</username><password>\${env.MAVEN_TOKEN}</password></server></servers></settings>" > $HOME/.m2/settings.xml
-          ls -lrt $HOME/.m2/settings.xml
 
       - name: Build with Maven
-        run: mvn clean install
+        run: mvn clean install -s $HOME/.m2/settings.xml
       -
         name: Upload to code cov
         uses: codecov/codecov-action@v3
