@@ -1,6 +1,5 @@
 package org.gcnc.calculate.service;
 
-import org.gcnc.calculate.model.Rank;
 import org.gcnc.calculate.model.Request;
 import org.gcnc.calculate.model.TeamResult;
 import org.junit.jupiter.api.Test;
@@ -41,13 +40,21 @@ public class CalculateServiceImplTest {
 
         // When/Then
         StepVerifier.create(calculateService.calculateResponse(request))
-                .assertNext(response -> {
-                    Rank teamRank = response.stream()
-                            .filter(teamRanking -> "B".equals(teamRanking.team()))
-                            .findFirst()
-                            .get();
-                    assertEquals("B", teamRank.team());
-                    assertEquals(Double.parseDouble("1.0"), teamRank.evPoints());
+                .assertNext(teamRank -> {
+                    assertEquals("B", teamRank.getTeam());
+                    assertEquals(Double.parseDouble("1.0"), teamRank.getEvPoints());
+                })
+                .assertNext(teamRank -> {
+                    assertEquals("A", teamRank.getTeam());
+                    assertEquals(Double.parseDouble("2.3333333333333335"), teamRank.getEvPoints());
+                })
+                .assertNext(teamRank -> {
+                    assertEquals("C", teamRank.getTeam());
+                    assertEquals(Double.parseDouble("2.3333333333333335"), teamRank.getEvPoints());
+                })
+                .assertNext(teamRank -> {
+                    assertEquals("D", teamRank.getTeam());
+                    assertEquals(Double.parseDouble("0"), teamRank.getEvPoints());
                 })
                 .verifyComplete();
     }

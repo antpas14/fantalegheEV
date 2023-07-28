@@ -7,10 +7,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
-import reactor.core.publisher.Mono;
+import reactor.core.publisher.Flux;
 import reactor.test.StepVerifier;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -24,9 +24,9 @@ class CalculateControllerTest {
 
     @Test
     void calculateGetTest() {
-        when(calculateService.calculateResponse(any())).thenReturn(Mono.empty());
+        when(calculateService.calculateResponse(any())).thenReturn(Flux.empty());
 
-        StepVerifier.create(calculateController.calculateGet("league"))
+        StepVerifier.create(calculateController.calculate("league", null))
                 .assertNext(result -> assertEquals(HttpStatus.OK, result.getStatusCode()))
                 .verifyComplete();
     }
