@@ -25,8 +25,8 @@ jobs:
           MAVEN_TOKEN: ${{ secrets.MAVEN_PAT }}
         run: |
           echo "Setting up Maven with credentials..."
-          MAVEN_TOKEN_FIRST_FOUR=${{ env.MAVEN_TOKEN:0:4 }}
-          MAVEN_TOKEN_LAST_FOUR=${{ env.MAVEN_TOKEN: -4 }}
+          MAVEN_TOKEN_FIRST_FOUR=$(echo "${MAVEN_TOKEN}" | cut -c1-4)
+          MAVEN_TOKEN_LAST_FOUR=$(echo "${MAVEN_TOKEN}" | rev | cut -c1-4 | rev)
           echo "Partial Maven Token: $MAVEN_TOKEN_FIRST_FOUR****$MAVEN_TOKEN_LAST_FOUR"
 
           echo "<settings><servers><server><id>github</id><username>\${env.MAVEN_USERNAME}</username><password>\${env.MAVEN_TOKEN}</password></server></servers></settings>" > $HOME/.m2/settings.xml
