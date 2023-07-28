@@ -1,11 +1,9 @@
 package org.gcnc.calculate.service;
 
-import org.gcnc.calculate.model.Rank;
 import org.gcnc.calculate.model.Request;
-import reactor.core.publisher.Mono;
-
-import java.util.List;
+import org.gcnc.fantalegheev_api.model.Rank;
+import reactor.core.publisher.Flux;
 
 public interface CalculateService {
-    Mono<List<Rank>> calculateResponse(Request req);
+    Flux<Rank> calculateResponse(Request req);
 }

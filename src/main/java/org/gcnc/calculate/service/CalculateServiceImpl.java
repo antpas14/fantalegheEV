@@ -2,16 +2,15 @@ package org.gcnc.calculate.service;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.gcnc.calculate.model.Rank;
 import org.gcnc.calculate.model.Request;
 import org.gcnc.calculate.model.TeamResult;
+import org.gcnc.fantalegheev_api.model.Rank;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Mono;
+import reactor.core.publisher.Flux;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor
@@ -19,17 +18,19 @@ import java.util.stream.Collectors;
 public class CalculateServiceImpl implements CalculateService {
     private final Parser parser;
     @Override
-    public Mono<List<Rank>> calculateResponse(Request req) {
+    public Flux<Rank> calculateResponse(Request req) {
         log.info("New request for league {}", req.leagueName());
-        return Mono.zip(parser.getResults(req.leagueName()), parser.getPoints(req.leagueName()))
-                .map(resultsAndPointsTuple -> getEVRanking(calculateEVRank(resultsAndPointsTuple.getT1()), resultsAndPointsTuple.getT2()));
+        return Flux.zip(parser.getResults(req.leagueName()), parser.getPoints(req.leagueName()))
+                .flatMap(resultsAndPointsTuple -> getEVRanking(calculateEVRank(resultsAndPointsTuple.getT1()), resultsAndPointsTuple.getT2()));
     }
 
-    private List<Rank> getEVRanking(final Map<String, Double> evPoints, final Map<String, Integer> points) {
-        return evPoints.keySet().stream()
-                .map(t -> new Rank(t, evPoints.get(t), points.get(t)))
-                .sorted((r1, r2) -> r2.points() - r1.points())
-                .collect(Collectors.toList());
+    private Flux<Rank> getEVRanking(final Map<String, Double> evPoints, final Map<String, Integer> points) {
+        return Flux.fromStream(evPoints.keySet().stream()
+                .map(team -> Rank.builder()
+                        .team(team)
+                        .evPoints(evPoints.get(team))
+                        .points(points.get(team)).build())
+                .sorted((r1, r2) -> r2.getPoints() - r1.getPoints()));
     }
 
     private Map<String, Double> calculateEVRank(Map<Integer, List<TeamResult>> results) {
