@@ -32,6 +32,13 @@ jobs:
         with:
           java-version: '17'
           distribution: 'adopt'
+      - name: Set up Maven
+        env:
+          MAVEN_USERNAME: antpas14
+          MAVEN_TOKEN: ${{ secrets.MAVEN_PAT }}
+        run: |
+          echo "<settings><servers><server><id>github</id><username>\${env.MAVEN_USERNAME}</username><password>\${env.MAVEN_TOKEN}</password></server></servers></settings>" > $HOME/.m2/settings.xml
+
       - name: Build with Maven
         run: mvn clean install
       - name: Temporarily save jar artifact
