@@ -33,7 +33,7 @@ jobs:
 
       - name: Build with Maven
         run: |
-          echo $HOME/.m2/settings.xml
+          cat $HOME/.m2/settings.xml
           mvn clean install -s $HOME/.m2/settings.xml
       -
         name: Upload to code cov
