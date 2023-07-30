@@ -26,7 +26,7 @@ jobs:
         run: |
           echo "Setting up Maven with credentials..."
           echo "<settings><servers><server><id>github</id><username>${MAVEN_USERNAME}</username><password>${MAVEN_TOKEN}</password></server></servers></settings>" > $HOME/.m2/settings.xml
-        
+
       - name: Build with Maven
         run: |
           mvn clean install -s $HOME/.m2/settings.xml

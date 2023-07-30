@@ -37,7 +37,8 @@ jobs:
           MAVEN_USERNAME: antpas14
           MAVEN_TOKEN: ${{ secrets.MAVEN_PAT }}
         run: |
-          echo "<settings><servers><server><id>github</id><username>\${env.MAVEN_USERNAME}</username><password>\${env.MAVEN_TOKEN}</password></server></servers></settings>" > $HOME/.m2/settings.xml
+          echo "Setting up Maven with credentials..."
+          echo "<settings><servers><server><id>github</id><username>${MAVEN_USERNAME}</username><password>${MAVEN_TOKEN}</password></server></servers></settings>" > $HOME/.m2/settings.xml
 
       - name: Build with Maven
         run: mvn clean install -s $HOME/.m2/settings.xml
