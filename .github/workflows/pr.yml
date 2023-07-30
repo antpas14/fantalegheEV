@@ -30,10 +30,11 @@ jobs:
           echo "Partial Maven Token: $MAVEN_TOKEN_FIRST_FOUR****$MAVEN_TOKEN_LAST_FOUR"
 
           echo "<settings><servers><server><id>github</id><username>\${env.MAVEN_USERNAME}</username><password>\${env.MAVEN_TOKEN}</password></server></servers></settings>" > $HOME/.m2/settings.xml
+          sed -i "s/\${env.MAVEN_USERNAME}/${MAVEN_USERNAME}/g" $HOME/.m2/settings.xml
+          sed -i "s/\${env.MAVEN_TOKEN}/${MAVEN_TOKEN}/g" $HOME/.m2/settings.xml
 
       - name: Build with Maven
         run: |
-          cat $HOME/.m2/settings.xml
           mvn clean install -s $HOME/.m2/settings.xml
       -
         name: Upload to code cov
