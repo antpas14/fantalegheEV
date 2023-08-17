@@ -56,7 +56,7 @@ public class ParserImpl implements Parser {
     }
 
     private Integer getTeamPointsFromMatch(Element t) {
-        if (Double.parseDouble(t.select(".team-fpt").text()) > 0.0 && !t.select(".team-fpt").get(0).text().equals("")) {
+        if (Double.parseDouble(t.select(".team-fpt").text()) > 0.0) {
             return Integer.parseInt(t.select(".team-score").get(0).text());
         } else {
             return null;
