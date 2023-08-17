@@ -28,11 +28,16 @@ public class CalculateServiceImplTest {
     @Test
     public void fetchRanking() {
         // Given
-        Map<Integer, List<TeamResult>> results = Map.of(1,
-                List.of(new TeamResult("A", 3),
+        Map<Integer, List<TeamResult>> results = Map.of(
+                1, List.of(new TeamResult("A", 3),
                         new TeamResult("B", 2),
                         new TeamResult("C", 3),
-                        new TeamResult("D", 1)));
+                        new TeamResult("D", 1)),
+                2, List.of(new TeamResult("A", null),
+                        new TeamResult("B", null),
+                        new TeamResult("C", null),
+                        new TeamResult("D", null))
+            );
         Map<String, Integer> rankings = Map.of("A", 1, "B", 3, "C", 1, "D", 0);
         when(parser.getResults(anyString())).thenReturn(Mono.just(results));
         when(parser.getPoints(anyString())).thenReturn(Mono.just(rankings));
