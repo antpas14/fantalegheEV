@@ -1,7 +1,8 @@
 package org.gcnc.calculate.fetcher;
 
+import lombok.Builder;
+import lombok.Getter;
 import org.gcnc.calculate.fetcher.config.FetcherProperties;
-import org.gcnc.calculate.model.Request;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserters;
@@ -26,8 +27,14 @@ public class Fetcher {
                 .uri("/retrieve")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(BodyInserters.fromValue(new Request(url)))
+                .body(BodyInserters.fromValue(FetcherRequest.builder().url(url).build()))
                 .retrieve()
                 .bodyToMono(String.class).single();
+    }
+
+    @Builder
+    @Getter
+    private static class FetcherRequest {
+        private String url;
     }
 }
