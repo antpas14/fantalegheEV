@@ -12,6 +12,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -53,6 +54,12 @@ public class FetcherTest {
         StepVerifier.create(fetcher.fetchResponse("url-test"))
                 .expectNextMatches(response -> response.equals("test"))
                 .verifyComplete();
+    }
+
+    @Test
+    public void requestTest() {
+        Fetcher.FetcherRequest request = Fetcher.FetcherRequest.builder().url("url").build();
+        assertEquals("url", request.getUrl());
     }
 
 }

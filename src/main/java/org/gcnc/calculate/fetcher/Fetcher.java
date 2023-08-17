@@ -34,7 +34,7 @@ public class Fetcher {
 
     @Builder
     @Getter
-    private static class FetcherRequest {
+    public static class FetcherRequest {
         private String url;
     }
 }
