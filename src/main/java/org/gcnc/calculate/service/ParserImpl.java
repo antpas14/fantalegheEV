@@ -56,9 +56,12 @@ public class ParserImpl implements Parser {
     }
 
     private Integer getTeamPointsFromMatch(Element t) {
-        return Integer.parseInt(t.select(".team-score").get(0).text());
+        if (Double.parseDouble(t.select(".team-fpt").text()) > 0.0 && !t.select(".team-fpt").get(0).text().equals("")) {
+            return Integer.parseInt(t.select(".team-score").get(0).text());
+        } else {
+            return null;
+        }
     }
-
     private String getTeamNameFromRankingTable(Element e) {
         return e.children().get(2).children().get(0).children().get(0).html();
     }
