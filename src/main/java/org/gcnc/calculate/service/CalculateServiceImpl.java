@@ -40,6 +40,10 @@ public class CalculateServiceImpl implements CalculateService {
                 .forEach(tr -> evRank.put(tr.team(), 0D));
         final int combinations = results.get(1).size() - 1;
         results.forEach((k, v) -> {
+            if (v.get(0).goal() == null) {
+               // game has not been played yet, so we end the loop early
+               return;
+            }
             for (int i = 0; i < v.size(); i++) {
                 TeamResult t1 = v.get(i);
                 double points = 0D;
