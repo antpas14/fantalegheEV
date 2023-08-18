@@ -2,8 +2,6 @@ package org.gcnc.calculate.service;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.gcnc.calculate.config.CalculateProperties;
-import org.gcnc.calculate.fetcher.Fetcher;
 import org.gcnc.calculate.model.TeamResult;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -21,36 +19,47 @@ import java.util.stream.Collectors;
 @Component
 @AllArgsConstructor
 public class ParserImpl implements Parser {
-    private final CalculateProperties calculateProperties;
-    private final Fetcher fetcher;
 
     @Override
-    public Mono<Map<Integer, List<TeamResult>>> getResults(String leagueName) {
-        String url = calculateProperties.getBaseUrl() + leagueName + calculateProperties.getCalendarSuffix();
-        return fetcher.fetchResponse(url)
-                .map(Jsoup::parse)
-                .map(doc -> doc.select(".match-frame"))
-                .map(this::createResultsMap);
-    }
-
-    public Mono<Map<String, Integer>> getPoints(String leagueName) {
-        return fetcher.fetchResponse(calculateProperties.getBaseUrl() + leagueName + calculateProperties.getRankingSuffix())
+    public Mono<Map<String, Integer>> getPoints(Mono<String> rankingsPage) {
+        return rankingsPage
                 .map(Jsoup::parse)
                 .map(doc -> getRankingTable(doc).stream()
                         .collect(Collectors.toMap(this::getTeamNameFromRankingTable, this::getTeamPointsFromRankingTable)));
     }
 
+    @Override
+    public Mono<Map<Integer, List<TeamResult>>> getResults(Mono<String> calendarPage) {
+        return calendarPage
+                .map(Jsoup::parse)
+                .map(this::selectCalendarDaysFromCalendarDocument)
+                .map(this::createResultsMap);
+    }
+
     private Map<Integer, List<TeamResult>> createResultsMap(Elements calendarDays) {
         AtomicInteger counter = new AtomicInteger();
         return calendarDays.stream()
-                .map(calendarDay -> calendarDay.select(".match"))
-                .map(match -> match.select(".team").stream()
+                .map(this::getMatchesFromCalendarDay)
+                .map(match -> getTeamsFromMatches(match)
+                        .stream()
                         .map(team -> new TeamResult(getTeamNameFromMatch(team), getTeamPointsFromMatch(team)))
                         .collect(Collectors.toList()))
                 .collect(Collectors.toMap(m-> counter.incrementAndGet(), m -> m));
     }
 
     // Utils methods
+    private Elements selectCalendarDaysFromCalendarDocument(Document calendar) {
+        return calendar.select(".match-frame");
+    }
+
+    private Elements getMatchesFromCalendarDay(Element calendarDay) {
+        return calendarDay.select(".match");
+    }
+
+    private Elements getTeamsFromMatches(Elements matches) {
+        return matches.select(".team");
+    }
+
     private String getTeamNameFromMatch(Element t) {
         return t.select(".team-name").get(0).text();
     }
