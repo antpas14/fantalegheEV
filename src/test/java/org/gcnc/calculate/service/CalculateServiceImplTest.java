@@ -4,6 +4,7 @@ import org.gcnc.calculate.config.CalculateProperties;
 import org.gcnc.calculate.fetcher.Fetcher;
 import org.gcnc.calculate.model.Request;
 import org.gcnc.calculate.model.TeamResult;
+import org.gcnc.calculate.parser.Parser;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

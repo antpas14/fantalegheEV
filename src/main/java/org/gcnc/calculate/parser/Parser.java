@@ -1,4 +1,4 @@
-package org.gcnc.calculate.service;
+package org.gcnc.calculate.parser;
 
 import org.gcnc.calculate.model.TeamResult;
 import reactor.core.publisher.Mono;
