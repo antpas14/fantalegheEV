@@ -25,7 +25,7 @@ public class CalculateServiceImpl implements CalculateService {
     @Override
     public Flux<Rank> calculateResponse(Request req) {
         log.info("New request for league {}", req.leagueName());
-        return Flux.zip(parser.getResults(getRankingPage(req.leagueName())), parser.getPoints(getCalendarPage(req.leagueName())))
+        return Flux.zip(parser.getResults(getCalendarPage(req.leagueName())), parser.getPoints(getRankingPage(req.leagueName())))
                 .flatMap(resultsAndPointsTuple -> getEVRanking(calculateEVRank(resultsAndPointsTuple.getT1()), resultsAndPointsTuple.getT2()));
     }
 
