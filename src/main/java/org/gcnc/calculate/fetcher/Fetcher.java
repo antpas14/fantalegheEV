@@ -2,7 +2,7 @@ package org.gcnc.calculate.fetcher;
 
 import lombok.Builder;
 import lombok.Getter;
-import org.gcnc.calculate.fetcher.config.FetcherProperties;
+import org.gcnc.calculate.config.FetcherProperties;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserters;
