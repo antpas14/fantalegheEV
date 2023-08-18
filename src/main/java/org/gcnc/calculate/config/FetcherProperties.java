@@ -1,4 +1,4 @@
-package org.gcnc.calculate.fetcher.config;
+package org.gcnc.calculate.config;
 
 import lombok.Getter;
 import lombok.Setter;

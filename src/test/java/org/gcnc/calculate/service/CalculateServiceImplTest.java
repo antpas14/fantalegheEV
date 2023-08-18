@@ -1,7 +1,10 @@
 package org.gcnc.calculate.service;
 
+import org.gcnc.calculate.config.CalculateProperties;
+import org.gcnc.calculate.fetcher.Fetcher;
 import org.gcnc.calculate.model.Request;
 import org.gcnc.calculate.model.TeamResult;
+import org.gcnc.calculate.parser.Parser;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -14,8 +17,8 @@ import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -23,7 +26,11 @@ public class CalculateServiceImplTest {
     @InjectMocks
     private CalculateServiceImpl calculateService;
     @Mock
-    private ParserImpl parser = mock(ParserImpl.class);
+    private CalculateProperties properties;
+    @Mock
+    private Parser parser;
+    @Mock
+    private Fetcher fetcher;
 
     @Test
     public void fetchRanking() {
@@ -39,8 +46,12 @@ public class CalculateServiceImplTest {
                         new TeamResult("D", null))
             );
         Map<String, Integer> rankings = Map.of("A", 1, "B", 3, "C", 1, "D", 0);
-        when(parser.getResults(anyString())).thenReturn(Mono.just(results));
-        when(parser.getPoints(anyString())).thenReturn(Mono.just(rankings));
+        when(properties.getBaseUrl()).thenReturn("url");
+        when(properties.getRankingSuffix()).thenReturn("ranking");
+        when(properties.getCalendarSuffix()).thenReturn("calendar");
+        when(fetcher.fetchResponse(anyString())).thenReturn(Mono.just("response"));
+        when(parser.getResults(any())).thenReturn(Mono.just(results));
+        when(parser.getPoints(any())).thenReturn(Mono.just(rankings));
         Request request = new Request("league-name");
 
         // When/Then

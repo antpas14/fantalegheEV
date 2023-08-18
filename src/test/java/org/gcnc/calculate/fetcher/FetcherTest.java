@@ -1,6 +1,6 @@
 package org.gcnc.calculate.fetcher;
 
-import org.gcnc.calculate.fetcher.config.FetcherProperties;
+import org.gcnc.calculate.config.FetcherProperties;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
