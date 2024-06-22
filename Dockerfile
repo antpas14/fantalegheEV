@@ -1,4 +1,4 @@
-FROM openjdk:17
+FROM amazoncorretto:21-alpine
 VOLUME /tmp
 
 ADD target/backend-0.0.1-SNAPSHOT.jar app.jar
