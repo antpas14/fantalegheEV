@@ -4,7 +4,7 @@ services:
         fantaleghe-backend: 
                 image: antpas14/fantaleghe-backend
                 ports: 
-                        - "8100:8100"
+                        - "8080:8080"
                 links:
                         - "web-fetcher:web-fetcher"
                 depends_on:
