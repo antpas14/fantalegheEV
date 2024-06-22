@@ -1,6 +1,7 @@
 server:
   servlet:
     context-path: /
+  port: 8100
 logging:
   level:
     org.springframework.web: DEBUG
