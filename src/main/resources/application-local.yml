@@ -1,3 +1,5 @@
 properties:
   fetcher:
     url: "http://localhost:5000"
+server:
+  port: 8080
