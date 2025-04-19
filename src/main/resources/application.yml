@@ -5,10 +5,3 @@ server:
 logging:
   level:
     org.springframework.web: DEBUG
-properties:
-  calculate:
-    baseUrl: "http://leghe.fantacalcio.it/"
-    calendarSuffix: "/calendario"
-    rankingSuffix: "/classifica"
-  fetcher:
-    url: "http://web-fetcher:5000"
