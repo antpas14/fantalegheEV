@@ -20,7 +20,7 @@ import reactor.test.StepVerifier;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -28,7 +28,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ExtendWith(MockitoExtension.class)
 class ExcelServiceTest {
 
-    private final String EXCEL_FILE_PATH = "src/test/resources/test.xlsx"; // Create this file
+    private final String EXCEL_FILE_NAME = "test"; // Create this file
+    private Path tempFilePath; // Store the path to the temporary file
 
     @InjectMocks
     private ExcelService excelService;
@@ -87,10 +88,11 @@ class ExcelServiceTest {
 
     @AfterEach
     public void cleanUp() throws IOException {
-        Files.deleteIfExists(Paths.get(EXCEL_FILE_PATH));
+        Files.deleteIfExists(tempFilePath);
     }
 
     private void writeValidExcelFile() throws IOException {
+        tempFilePath = Files.createTempFile(EXCEL_FILE_NAME, ".xlsx");
         // Create a sample Excel file for testing
         try (Workbook workbook = new XSSFWorkbook()) {
             Sheet sheet = workbook.createSheet("Sheet1");
@@ -100,22 +102,23 @@ class ExcelServiceTest {
             Row row2 = sheet.createRow(1);
             row2.createCell(0).setCellValue(false);
             row2.createCell(1).setCellValue("Real Value 2");
-            try (java.io.FileOutputStream outputStream = new java.io.FileOutputStream(EXCEL_FILE_PATH)) {
+            try (java.io.FileOutputStream outputStream = new java.io.FileOutputStream(tempFilePath.toFile())) {
                 workbook.write(outputStream);
             }
         }
     }
 
     private void writeInvalidExcelFile() throws IOException {
-        Files.writeString(Paths.get(EXCEL_FILE_PATH), "This is not an excel file");
+        tempFilePath = Files.createTempFile(EXCEL_FILE_NAME, ".xlsx");
+        Files.writeString(tempFilePath, "This is not an excel file");
     }
 
     private void writeEmptyFile() throws IOException {
-        Files.createFile(Paths.get(EXCEL_FILE_PATH)); // Create an empty file
+        tempFilePath = Files.createTempFile(EXCEL_FILE_NAME, ".xlsx");
     }
 
     private Part createPartFromFile() throws IOException {
-        byte[] bytes = Files.readAllBytes(Paths.get(EXCEL_FILE_PATH));
+        byte[] bytes = Files.readAllBytes(tempFilePath);
         DataBuffer dataBuffer = new DefaultDataBufferFactory().wrap(bytes);
         return new Part() {
             @NotNull
