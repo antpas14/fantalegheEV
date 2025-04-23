@@ -26,7 +26,7 @@ class CalculateControllerTest {
     private CalculateService calculateService;
 
     @Mock
-    private Part mockFilePart;
+    private Flux<Part> mockFilePart;
 
     @Test
     void calculatePostReturnsOk() throws Exception {

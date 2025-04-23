@@ -1,6 +1,7 @@
 package org.gcnc.calculate.controller;
 
 import lombok.AllArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.gcnc.calculate.service.CalculateService;
 import org.gcnc.fantalegheev_api.api.CalculateApi;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -21,8 +23,9 @@ import reactor.core.publisher.Mono;
 public class CalculateController implements CalculateApi {
     private CalculateService calculateService;
 
+    @SneakyThrows
     @PostMapping("/calculate")
-    public Mono<ResponseEntity<Flux<Rank>>> calculate(@RequestPart("calendar") Part file) throws Exception {
+    public Mono<ResponseEntity<Flux<Rank>>> calculate(@RequestPart("file") Flux<Part> file, ServerWebExchange w) {
         return Mono.just(ResponseEntity.ok(calculateService.calculateResponse(file)));
     }
 }

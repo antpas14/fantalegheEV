@@ -1,24 +1,16 @@
-version: '3'
+version: '3.8'
 
 services:
-        fantaleghe-backend: 
-                image: antpas14/fantaleghe-backend
-                ports: 
+        fantaleghe-backend:
+                image: antpas14/fantaleghe-backend:latest
+                ports:
                         - "8080:8080"
+        fantaleghe-ui:
+                image: fantaleghe-ui-react:latest
+                ports:
+                        - "3000:80"
                 links:
-                        - "web-fetcher:web-fetcher"
+                        - "fantaleghe-backend:fantaleghe-backend"
                 depends_on:
-                        - web-fetcher
-        ui:
-                image: antpas14/fantaleghe-ui
-                ports: 
-                        - "3001:3001"
-                links: 
-                       - "fantaleghe-backend:fantaleghe-backend"
-                depends_on: 
-                        - fantaleghe-backend                       
-        web-fetcher:
-                image: antpas14/web-fetcher
-                ports: 
-                        - "5000:5000"
-            
+                        - fantaleghe-backend
+
