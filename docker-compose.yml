@@ -6,9 +6,9 @@ services:
                 ports:
                         - "8080:8080"
         fantaleghe-ui:
-                image: fantaleghe-ui-react:latest
+                image: antpas14/fantaleghe-ui-react:latest
                 ports:
-                        - "3000:80"
+                        - "3000:3000"
                 links:
                         - "fantaleghe-backend:fantaleghe-backend"
                 depends_on:

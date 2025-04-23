@@ -24,6 +24,7 @@ public class CalculateController implements CalculateApi {
     private CalculateService calculateService;
 
     @SneakyThrows
+    @Override
     @PostMapping("/calculate")
     public Mono<ResponseEntity<Flux<Rank>>> calculate(@RequestPart("file") Flux<Part> file, ServerWebExchange w) {
         return Mono.just(ResponseEntity.ok(calculateService.calculateResponse(file)));
