@@ -25,8 +25,8 @@ public class CalculateService {
     private final ExcelService excelService;
     private final Parser parser;
 
-    public Flux<Rank> calculateResponse(Part file) throws Exception {
-        return excelService.readExcel(file)
+    public Flux<Rank> calculateResponse(Flux<Part> file) throws Exception {
+        return file.flatMap(excelService::readExcel)
                 .map(parser::getTeamResults)
                 .flatMapIterable(this::calculateEVRank);
     }
