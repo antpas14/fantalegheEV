@@ -10,6 +10,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.codec.multipart.Part;
+import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
@@ -28,13 +29,16 @@ class CalculateControllerTest {
     @Mock
     private Flux<Part> mockFilePart;
 
+    @Mock
+    private ServerWebExchange mockServerWebExchange;
+
     @Test
     void calculatePostReturnsOk() throws Exception {
         // Arrange
         when(calculateService.calculateResponse(mockFilePart)).thenReturn(Flux.empty());
 
         // Act
-        Mono<ResponseEntity<Flux<Rank>>> responseMono = calculateController.calculate(mockFilePart);
+        Mono<ResponseEntity<Flux<Rank>>> responseMono = calculateController.calculate(mockFilePart, mockServerWebExchange);
 
         // Assert
         StepVerifier.create(responseMono)
