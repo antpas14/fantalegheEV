@@ -58,4 +58,7 @@ jobs:
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/fantaleghe-backend:latest
 
       - name: Upload to code cov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+      
