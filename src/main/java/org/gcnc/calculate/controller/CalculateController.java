@@ -1,7 +1,6 @@
 package org.gcnc.calculate.controller;
 
 import lombok.AllArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.gcnc.calculate.service.CalculateService;
 import org.gcnc.fantalegheev_api.api.CalculateApi;
@@ -23,7 +22,6 @@ import reactor.core.publisher.Mono;
 public class CalculateController implements CalculateApi {
     private CalculateService calculateService;
 
-    @SneakyThrows
     @Override
     @PostMapping("/calculate")
     public Mono<ResponseEntity<Flux<Rank>>> calculate(@RequestPart("file") Flux<Part> file, ServerWebExchange w) {
