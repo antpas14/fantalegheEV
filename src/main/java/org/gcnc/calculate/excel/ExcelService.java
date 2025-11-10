@@ -21,10 +21,7 @@ public class ExcelService {
 
     public Mono<List<List<String>>> readExcel(Part file) {
         return file.content()
-                .reduce((buffer1, buffer2) -> {
-                    buffer1.write(buffer2);
-                    return buffer1;
-                })
+                .single()
                 .map(dataBuffer -> {
                     List<List<String>> rows = new ArrayList<>();
                     try (InputStream is = dataBuffer.asInputStream();
