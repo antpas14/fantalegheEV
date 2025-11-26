@@ -1,5 +1,6 @@
 package org.gcnc.calculate.controller;
 
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.gcnc.calculate.service.CalculateService;
@@ -22,9 +23,9 @@ import reactor.core.publisher.Mono;
 public class CalculateController implements CalculateApi {
     private CalculateService calculateService;
 
-    @Override
     @PostMapping("/calculate")
-    public Mono<ResponseEntity<Flux<Rank>>> calculate(@RequestPart("file") Flux<Part> file, ServerWebExchange w) {
+    @Override
+    public Mono<ResponseEntity<Flux<Rank>>> calculate(@Parameter(name = "file",description = "",required = true) @RequestPart(value = "file",required = true) Part file, @Parameter(hidden = true) ServerWebExchange exchange) {
         return Mono.just(ResponseEntity.ok(calculateService.calculateResponse(file)));
     }
 }
