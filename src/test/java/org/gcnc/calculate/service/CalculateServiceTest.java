@@ -69,7 +69,7 @@ public class CalculateServiceTest {
         );
 
         // When
-        Flux<Rank> result = calculateService.calculateResponse(Flux.just(mockPart));
+        Flux<Rank> result = calculateService.calculateResponse(mockPart);
 
         // Then
         StepVerifier.create(result)
@@ -104,7 +104,7 @@ public class CalculateServiceTest {
         when(parser.getTeamResults(any())).thenReturn(matchResults);
 
         // When
-        Flux<Rank> result = calculateService.calculateResponse(Flux.just(mockPart));
+        Flux<Rank> result = calculateService.calculateResponse(mockPart);
 
         // Then
         StepVerifier.create(result)
@@ -119,7 +119,7 @@ public class CalculateServiceTest {
         when(parser.getTeamResults(any())).thenReturn(List.of());
 
         // When
-        Flux<Rank> result = calculateService.calculateResponse(Flux.just(mockPart));
+        Flux<Rank> result = calculateService.calculateResponse(mockPart);
 
         // Then
         StepVerifier.create(result)
@@ -133,7 +133,7 @@ public class CalculateServiceTest {
         when(excelService.readExcel(any())).thenReturn(Mono.error(new RuntimeException("Test error")));
 
         // When
-        Flux<Rank> result = calculateService.calculateResponse(Flux.just(mockPart));
+        Flux<Rank> result = calculateService.calculateResponse(mockPart);
 
         // Then
         StepVerifier.create(result)
