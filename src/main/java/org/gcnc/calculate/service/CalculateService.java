@@ -7,6 +7,7 @@ import org.gcnc.calculate.excel.ExcelService;
 import org.gcnc.calculate.model.MatchResults;
 import org.gcnc.calculate.parser.Parser;
 import org.gcnc.fantalegheev_api.model.Rank;
+import org.jspecify.annotations.NonNull;
 import org.springframework.http.codec.multipart.Part;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
@@ -24,8 +25,8 @@ public class CalculateService {
     private final ExcelService excelService;
     private final Parser parser;
 
-    public Flux<Rank> calculateResponse(Flux<Part> file) {
-        return file.flatMap(excelService::readExcel)
+    public Flux<@NonNull Rank> calculateResponse(Part file) {
+        return excelService.readExcel(file)
                 .map(parser::getTeamResults)
                 .flatMapIterable(this::calculateEVRank);
     }

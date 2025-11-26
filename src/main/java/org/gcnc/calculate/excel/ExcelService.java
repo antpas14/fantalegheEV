@@ -1,11 +1,7 @@
 package org.gcnc.calculate.excel;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.http.codec.multipart.Part;
 import org.springframework.stereotype.Service;
@@ -14,6 +10,9 @@ import reactor.core.publisher.Mono;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Spliterator;
+import java.util.Spliterators;
+import java.util.stream.StreamSupport;
 
 @Slf4j
 @Service
@@ -28,14 +27,9 @@ public class ExcelService {
                         Workbook workbook = new XSSFWorkbook(is)) {
 
                         Sheet sheet = workbook.getSheetAt(0);
-                        for (Row row : sheet) {
-                            List<String> rowData = new ArrayList<>();
-                            for (Cell cell : row) {
-                                cell.setCellType(CellType.STRING);
-                                rowData.add(cell.getStringCellValue());
-                            }
-                            rows.add(rowData);
-                        }
+                        return StreamSupport.stream(Spliterators.spliteratorUnknownSize(sheet.iterator(), Spliterator.ORDERED), false)
+                                .map(this::processRow)
+                                .toList();
                     } catch (Exception e) {
                         log.error("Error parsing excel file ", e);
                     }
@@ -43,5 +37,20 @@ public class ExcelService {
                 });
     }
 
-
+    private List<String> processRow(Row row) {
+        return StreamSupport.stream(Spliterators.spliteratorUnknownSize(
+                        row.cellIterator(), Spliterator.ORDERED), false)
+                .map(cell -> {
+                    if (CellType.STRING.equals(cell.getCellType())) {
+                        return cell.getStringCellValue();
+                    } else if (CellType.NUMERIC.equals(cell.getCellType())) {
+                        return String.valueOf(cell.getNumericCellValue());
+                    } else if (CellType.BOOLEAN.equals(cell.getCellType())) {
+                        return String.valueOf(cell.getBooleanCellValue());
+                    } else {
+                        return "";
+                    }
+                })
+                .toList();
+    }
 }

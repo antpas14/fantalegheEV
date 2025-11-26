@@ -27,7 +27,7 @@ class CalculateControllerTest {
     private CalculateService calculateService;
 
     @Mock
-    private Flux<Part> mockFilePart;
+    private Part mockFilePart;
 
     @Mock
     private ServerWebExchange mockServerWebExchange;

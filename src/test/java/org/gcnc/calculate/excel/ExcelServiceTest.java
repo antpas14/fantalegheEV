@@ -5,6 +5,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -48,7 +49,7 @@ class ExcelServiceTest {
                 .assertNext(rows -> {
                     assertEquals(2, rows.size());
                     assertEquals(List.of("Real Value 1", "456.0"), rows.get(0));
-                    assertEquals(List.of("FALSE", "Real Value 2"), rows.get(1));
+                    assertEquals(List.of("false", "Real Value 2"), rows.get(1));
                 })
                 .verifyComplete();
     }
@@ -61,11 +62,11 @@ class ExcelServiceTest {
         Part filePart = createPartFromFile();
 
         // Then
-        Mono<List<List<String>>> resultMono = excelService.readExcel(filePart);
+        Mono<@NonNull List<List<String>>> resultMono = excelService.readExcel(filePart);
 
         // Assert
         StepVerifier.create(resultMono)
-                .assertNext(List::isEmpty)
+                .assertNext(x -> assertEquals(0, x.size()))
                 .verifyComplete();
 
     }
@@ -82,7 +83,7 @@ class ExcelServiceTest {
 
         // Verify
         StepVerifier.create(resultMono)
-                .assertNext(List::isEmpty)
+                .assertNext(x -> assertEquals(0, x.size()))
                 .verifyComplete();
     }
 
