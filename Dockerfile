@@ -1,4 +1,4 @@
-FROM amazoncorretto:21-alpine
+FROM amazoncorretto:25-alpine
 VOLUME /tmp
 
 ADD target/backend-0.0.1-SNAPSHOT.jar app.jar
